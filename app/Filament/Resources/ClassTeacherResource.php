@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PackageResource\Pages;
-use App\Filament\Resources\PackageResource\RelationManagers;
-use App\Models\Package;
+use App\Filament\Resources\ClassTeacherResource\Pages;
+use App\Filament\Resources\ClassTeacherResource\RelationManagers;
+use App\Models\ClassTeacher;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,19 +13,22 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PackageResource extends Resource
+class ClassTeacherResource extends Resource
 {
-    protected static ?string $model = Package::class;
+    protected static ?string $model = ClassTeacher::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-cube';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Forms\Components\TextInput::make('class_room_id')
                     ->required()
-                    ->maxLength(255),
+                    ->numeric(),
+                Forms\Components\TextInput::make('teacher_id')
+                    ->required()
+                    ->numeric(),
             ]);
     }
 
@@ -33,8 +36,12 @@ class PackageResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('class_room_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('teacher_id')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -67,9 +74,9 @@ class PackageResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPackages::route('/'),
-            'create' => Pages\CreatePackage::route('/create'),
-            'edit' => Pages\EditPackage::route('/{record}/edit'),
+            'index' => Pages\ListClassTeachers::route('/'),
+            'create' => Pages\CreateClassTeacher::route('/create'),
+            'edit' => Pages\EditClassTeacher::route('/{record}/edit'),
         ];
     }
 }
