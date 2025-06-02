@@ -23,7 +23,15 @@ class ClassRoomResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\Select::make('academic_year_id')
+                    ->relationship('academicYear', 'name')
+                    ->required(),
+                Forms\Components\Select::make('package_id')
+                    ->relationship('package', 'name')
+                    ->required(),
             ]);
     }
 
@@ -31,10 +39,20 @@ class ClassRoomResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('academic_year.name')
+                    ->label('Tahun Ajaran')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('package.name')
+                    ->label('Package')
+                    ->searchable(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('academic_year_id')
+                    ->relationship('academicYear', 'name'),
+                Tables\Filters\SelectFilter::make('package_id')
+                    ->relationship('package', 'name'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

@@ -10,6 +10,8 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+
+
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -23,7 +25,9 @@ class StudentResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
             ]);
     }
 
@@ -31,6 +35,8 @@ class StudentResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -41,7 +47,7 @@ class StudentResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                // Search filter is automatically added when using ->searchable() on columns
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

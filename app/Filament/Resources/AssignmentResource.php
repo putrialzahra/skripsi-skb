@@ -23,7 +23,21 @@ class AssignmentResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('title')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('description')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('file')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('class_room_id')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('teacher_id')
+                    ->required()
+                    ->numeric(),
             ]);
     }
 
@@ -31,7 +45,26 @@ class AssignmentResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('title')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('description')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('file')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('class_room_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('teacher_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

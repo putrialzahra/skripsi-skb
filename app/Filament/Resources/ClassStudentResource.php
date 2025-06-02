@@ -23,7 +23,12 @@ class ClassStudentResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Select::make('class_room_id')
+                    ->relationship('classRoom', 'name')
+                    ->required(),
+                Forms\Components\Select::make('student_id')
+                    ->relationship('student', 'name')
+                    ->required(),
             ]);
     }
 
@@ -31,10 +36,26 @@ class ClassStudentResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('class_room.name')
+                    ->label('Kelas')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('student.name')
+                    ->label('Siswa')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('class_room_id')
+                    ->relationship('classRoom', 'name'),
+                Tables\Filters\SelectFilter::make('student_id')
+                    ->relationship('student', 'name'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
