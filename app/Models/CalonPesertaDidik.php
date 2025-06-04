@@ -17,6 +17,8 @@ class CalonPesertaDidik extends Model
         'jenis_kelamin',
         'alamat',
         'agama',
+        'no_hp',
+        'email',
         'pekerjaan',
         'kebangsaan',
         'asal_sekolah',

@@ -36,6 +36,7 @@ return new class extends Migration
             $table->string('ijazah')->nullable(); // path file
             $table->string('foto')->nullable(); // path file
             $table->boolean('pernyataan')->default(false);
+            $table->enum('status', ['pending', 'terima', 'tidak_terima'])->default('pending');
             $table->timestamps();
         });
     }

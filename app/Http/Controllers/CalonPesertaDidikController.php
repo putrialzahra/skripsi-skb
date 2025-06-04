@@ -89,6 +89,8 @@ class CalonPesertaDidikController extends Controller
                 'status' => 'pending'
             ]);
 
+
+            //dd($data);
             CalonPesertaDidik::create($data);
 
             return redirect()->route('ppdb.create')
@@ -102,6 +104,8 @@ class CalonPesertaDidikController extends Controller
                     }
                 }
             }
+
+            dd($e->getMessage());
 
             return back()->withInput()
                          ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
