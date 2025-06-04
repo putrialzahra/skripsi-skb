@@ -7,6 +7,7 @@ use App\Filament\Resources\AcademicYearResource\RelationManagers;
 use App\Models\AcademicYear;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Tables\Columns\BooleanColumn;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -37,8 +38,14 @@ class AcademicYearResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\IconColumn::make('is_active')
-                    ->boolean(),
+                BooleanColumn::make('is_active')
+                    ->action(function ($record, $column) {
+                        $name = $column->getName();
+                        $record->update([
+                            $name => !$record->$name,
+                        ]);
+                    })
+                    ->label('Aktif'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

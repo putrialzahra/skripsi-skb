@@ -10,3 +10,5 @@ Route::get('/', function () {
 // Routes untuk PPDB
 Route::get('/ppdb', [CalonPesertaDidikController::class, 'create'])->name('ppdb.create');
 Route::post('/ppdb', [CalonPesertaDidikController::class, 'store'])->name('ppdb.store');
+
+

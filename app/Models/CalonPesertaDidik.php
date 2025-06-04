@@ -10,6 +10,7 @@ class CalonPesertaDidik extends Model
     use HasFactory;
 
     protected $fillable = [
+        'academic_year_id',
         'nama_lengkap',
         'tempat_lahir',
         'tanggal_lahir',
@@ -17,8 +18,10 @@ class CalonPesertaDidik extends Model
         'alamat',
         'agama',
         'pekerjaan',
-        'no_hp',
-        'email',
+        'kebangsaan',
+        'asal_sekolah',
+        'nama_lembaga',
+        'alamat_lembaga',
         'nama_ayah',
         'pekerjaan_ayah',
         'nama_ibu',
@@ -29,5 +32,6 @@ class CalonPesertaDidik extends Model
         'ijazah',
         'foto',
         'pernyataan',
+        'status'
     ];
 }

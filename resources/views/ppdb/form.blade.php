@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" x-data="ppdbForm()">
+<html lang="id" x-data="app">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -126,7 +126,9 @@
             </div>
 
             <!-- Form Content -->
-            <form class="px-8 py-6" @submit.prevent="submitForm">
+            <form class="px-8 py-6" action="{{ route('ppdb.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('POST')
 
                 <!-- Step 1: Data Diri & Pendidikan -->
                 <div x-show="currentStep === 1" class="form-section space-y-6">
@@ -140,41 +142,45 @@
                         <!-- Nama Lengkap -->
                         <div class="md:col-span-2">
                             <label class="block text-sm font-bold text-gray-700 mb-2">Nama Lengkap <span class="text-red-500">*</span></label>
-                            <input type="text" x-model="formData.nama_lengkap" required
-                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl input-focus transition placeholder-gray-400">
+                            <input type="text" name="nama_lengkap" x-model="formData.nama_lengkap" required
+                                class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl input-focus transition placeholder-gray-400">
                         </div>
+
                         <!-- Jenis Kelamin -->
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-2">Jenis Kelamin <span class="text-red-500">*</span></label>
                             <div class="flex space-x-6">
                                 <label class="inline-flex items-center">
                                     <input type="radio" name="jenis_kelamin" value="L" x-model="formData.jenis_kelamin" required
-                                           class="h-5 w-5 text-primary focus:ring-primary border-2 border-gray-300">
+                                        class="h-5 w-5 text-primary focus:ring-primary border-2 border-gray-300">
                                     <span class="ml-3 text-gray-700 font-medium">Laki-laki</span>
                                 </label>
                                 <label class="inline-flex items-center">
-                                    <input type="radio" name="jenis_kelamin" value="P" x-model="formData.jenis_kelamin" 
-                                           class="h-5 w-5 text-primary focus:ring-primary border-2 border-gray-300">
+                                    <input type="radio" name="jenis_kelamin" value="P" x-model="formData.jenis_kelamin"
+                                        class="h-5 w-5 text-primary focus:ring-primary border-2 border-gray-300">
                                     <span class="ml-3 text-gray-700 font-medium">Perempuan</span>
                                 </label>
                             </div>
                         </div>
+
                         <!-- Tempat Lahir -->
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-2">Tempat Lahir <span class="text-red-500">*</span></label>
-                            <input type="text" x-model="formData.tempat_lahir" required
-                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl input-focus transition placeholder-gray-400">
+                            <input type="text" name="tempat_lahir" x-model="formData.tempat_lahir" required
+                                class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl input-focus transition placeholder-gray-400">
                         </div>
+
                         <!-- Tanggal Lahir -->
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-2">Tanggal Lahir <span class="text-red-500">*</span></label>
-                            <input type="date" x-model="formData.tanggal_lahir" required
-                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl input-focus transition text-gray-700">
+                            <input type="date" name="tanggal_lahir" x-model="formData.tanggal_lahir" required
+                                class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl input-focus transition text-gray-700">
                         </div>
+
                         <!-- Agama -->
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-2">Agama <span class="text-red-500">*</span></label>
-                            <select x-model="formData.agama" required
+                            <select name="agama" x-model="formData.agama" required
                                     class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl input-focus transition text-gray-700">
                                 <option value="" class="text-gray-400">Pilih Agama</option>
                                 <option value="Islam">Islam</option>
@@ -188,39 +194,39 @@
                         <!-- Pekerjaan -->
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-2">Pekerjaan <span class="text-red-500">*</span></label>
-                            <input type="text" x-model="formData.pekerjaan" required
+                            <input type="text" name="pekerjaan" x-model="formData.pekerjaan" required
                                    class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl input-focus transition placeholder-gray-400" 
                                    placeholder="Siswa/Mahasiswa/Pelajar">
                         </div>
                         <!-- Kebangsaan -->
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-2">Kebangsaan <span class="text-red-500">*</span></label>
-                            <input type="text" x-model="formData.kebangsaan" required
+                            <input type="text" name="kebangsaan" x-model="formData.kebangsaan" required
                                    class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl bg-gray-100 text-gray-600" 
                                    value="WNI" readonly>
                         </div>
                         <!-- Alamat -->
                         <div class="md:col-span-2">
                             <label class="block text-sm font-bold text-gray-700 mb-2">Alamat Lengkap <span class="text-red-500">*</span></label>
-                            <textarea x-model="formData.alamat" rows="3" required
+                            <textarea name="alamat" x-model="formData.alamat" rows="3" required
                                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl input-focus transition placeholder-gray-400"></textarea>
                         </div>
                         <!-- Kontak -->
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-2">No. HP/WhatsApp <span class="text-red-500">*</span></label>
-                            <input type="text" x-model="formData.no_hp" required
+                            <input type="text" name="no_hp" x-model="formData.no_hp" required
                                    class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl input-focus transition placeholder-gray-400">
                         </div>
                         <!-- Email -->
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-2">Email <span class="text-red-500">*</span></label>
-                            <input type="email" x-model="formData.email" required
+                            <input type="email" name="email" x-model="formData.email" required
                                    class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl input-focus transition placeholder-gray-400">
                         </div>
                         <!-- Jenjang Asal -->
                         <div class="md:col-span-2">
                             <label class="block text-sm font-bold text-gray-700 mb-2">Pilih Paket Belajar <span class="text-red-500">*</span></label>
-                            <select x-model="formData.asal_sekolah" required
+                            <select name="asal_sekolah" x-model="formData.asal_sekolah" required
                                     class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl input-focus transition text-gray-700">
                                 <option value="" class="text-gray-400">Pilih Paket Belajar</option>
                                 <option value="Paket A">Paket A</option>
@@ -231,13 +237,13 @@
                         <!-- Nama Lembaga -->
                         <div class="md:col-span-2">
                             <label class="block text-sm font-bold text-gray-700 mb-2">Nama Lembaga (SMP/MTs) <span class="text-red-500">*</span></label>
-                            <input type="text" x-model="formData.nama_lembaga" required
+                            <input type="text" name="nama_lembaga" x-model="formData.nama_lembaga" required
                                    class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl input-focus transition placeholder-gray-400">
                         </div>
                         <!-- Alamat Lembaga -->
                         <div class="md:col-span-2">
                             <label class="block text-sm font-bold text-gray-700 mb-2">Alamat Lembaga <span class="text-red-500">*</span></label>
-                            <textarea x-model="formData.alamat_lembaga" rows="3" required
+                            <textarea name="alamat_lembaga" x-model="formData.alamat_lembaga" rows="3" required
                                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl input-focus transition placeholder-gray-400"></textarea>
                         </div>
                     </div>
@@ -260,12 +266,12 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label class="block text-sm font-bold text-gray-700 mb-2">Nama Ayah <span class="text-red-500">*</span></label>
-                                    <input type="text" x-model="formData.nama_ayah" required
+                                    <input type="text" name="nama_ayah" x-model="formData.nama_ayah" required
                                         class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl input-focus transition placeholder-gray-400">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-bold text-gray-700 mb-2">Pekerjaan Ayah <span class="text-red-500">*</span></label>
-                                    <input type="text" x-model="formData.pekerjaan_ayah" required
+                                    <input type="text" name="pekerjaan_ayah" x-model="formData.pekerjaan_ayah" required
                                         class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl input-focus transition placeholder-gray-400"
                                         placeholder="Masukkan pekerjaan ayah">
                                 </div>
@@ -280,12 +286,12 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label class="block text-sm font-bold text-gray-700 mb-2">Nama Ibu <span class="text-red-500">*</span></label>
-                                    <input type="text" x-model="formData.nama_ibu" required
+                                    <input type="text" name="nama_ibu" x-model="formData.nama_ibu" required
                                         class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl input-focus transition placeholder-gray-400">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-bold text-gray-700 mb-2">Pekerjaan Ibu <span class="text-red-500">*</span></label>
-                                    <input type="text" x-model="formData.pekerjaan_ibu" required
+                                    <input type="text" name="pekerjaan_ibu" x-model="formData.pekerjaan_ibu" required
                                         class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl input-focus transition placeholder-gray-400"
                                         placeholder="Masukkan pekerjaan ibu">
                                 </div>
@@ -295,7 +301,7 @@
                         <!-- Kontak Orang Tua -->
                         <div class="md:col-span-2">
                             <label class="block text-sm font-bold text-gray-700 mb-2">No. HP Orang Tua <span class="text-red-500">*</span></label>
-                            <input type="text" x-model="formData.no_hp_ortu" required
+                            <input type="text" name="no_hp_ortu" x-model="formData.no_hp_ortu" required
                                 class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl input-focus transition placeholder-gray-400">
                         </div>
                     </div>
@@ -311,46 +317,53 @@
                     </h3>
                     
                     <div class="space-y-6">
-                        <!-- Kartu Keluarga -->
+                       <!-- Kartu Keluarga -->
                         <div class="bg-white p-6 rounded-xl border-2 border-gray-200">
                             <label class="block text-sm font-bold text-gray-700 mb-3">Upload Kartu Keluarga (KK) <span class="text-red-500">*</span></label>
                             <div class="flex items-center">
+                                <!-- Input File dan Label -->
                                 <div x-data="{ fileName: '' }" class="flex-grow">
-                                    <input type="file" id="kk" accept=".pdf" @change="fileName = $event.target.files[0]?.name; formData.kk = $event.target.files[0]" required
-                                           class="hidden">
+                                    <input type="file" name="kk" id="kk" accept=".pdf"
+                            @change="fileName = $event.target.files[0]?.name; formData.kk = $event.target.files[0]" required
+                            class="hidden">
                                     <label for="kk" class="cursor-pointer bg-gray-100 hover:bg-gray-200 px-4 py-3 rounded-lg border border-gray-300 flex items-center justify-between transition file-upload-label">
                                         <span x-text="fileName || 'Pilih file PDF'" class="text-gray-700 truncate"></span>
                                         <i class="fas fa-cloud-upload-alt text-gray-500 ml-3"></i>
                                     </label>
-                                </div>
-                                <div x-show="fileName" class="ml-4">
-                                    <button type="button" @click="fileName = ''; formData.kk = null; document.getElementById('kk').value = ''" 
-                                            class="text-red-500 hover:text-red-700">
-                                        <i class="fas fa-times-circle text-xl"></i>
-                                    </button>
+
+                                    <!-- Tombol hapus file -->
+                                    <div x-show="fileName" class="mt-2 text-right">
+                                        <button type="button"
+                                                @click="fileName = ''; formData.kk = null; document.getElementById('kk').value = ''"
+                                                class="text-red-500 hover:text-red-700 text-sm">
+                                            <i class="fas fa-times-circle mr-1"></i>Hapus
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                             <p class="text-xs text-gray-500 mt-2">Format: PDF (Maksimal 2MB)</p>
                         </div>
-                        
+
                         <!-- Akta Kelahiran -->
                         <div class="bg-white p-6 rounded-xl border-2 border-gray-200">
                             <label class="block text-sm font-bold text-gray-700 mb-3">Upload Akta Kelahiran <span class="text-red-500">*</span></label>
                             <div class="flex items-center">
                                 <div x-data="{ fileName: '' }" class="flex-grow">
-                                    <input type="file" id="akta" accept=".pdf" @change="fileName = $event.target.files[0]?.name; formData.akta = $event.target.files[0]" required
+                                    <input type="file" name="akta" id="akta" accept=".pdf" @change="fileName = $event.target.files[0]?.name; formData.akta = $event.target.files[0]" required
                                            class="hidden">
                                     <label for="akta" class="cursor-pointer bg-gray-100 hover:bg-gray-200 px-4 py-3 rounded-lg border border-gray-300 flex items-center justify-between transition file-upload-label">
                                         <span x-text="fileName || 'Pilih file PDF'" class="text-gray-700 truncate"></span>
                                         <i class="fas fa-cloud-upload-alt text-gray-500 ml-3"></i>
                                     </label>
                                 </div>
-                                <div x-show="fileName" class="ml-4">
-                                    <button type="button" @click="fileName = ''; formData.akta = null; document.getElementById('akta').value = ''" 
-                                            class="text-red-500 hover:text-red-700">
-                                        <i class="fas fa-times-circle text-xl"></i>
-                                    </button>
-                                </div>
+                                 <!-- Tombol hapus file -->
+                                 <div x-show="fileName" class="mt-2 text-right">
+                                        <button type="button"
+                                                @click="fileName = ''; formData.akta = null; document.getElementById('akta').value = ''"
+                                                class="text-red-500 hover:text-red-700 text-sm">
+                                            <i class="fas fa-times-circle mr-1"></i>Hapus
+                                        </button>
+                                    </div>
                             </div>
                             <p class="text-xs text-gray-500 mt-2">Format: PDF (Maksimal 2MB)</p>
                         </div>
@@ -360,19 +373,21 @@
                             <label class="block text-sm font-bold text-gray-700 mb-3">Upload Ijazah/SKHUN <span class="text-red-500">*</span></label>
                             <div class="flex items-center">
                                 <div x-data="{ fileName: '' }" class="flex-grow">
-                                    <input type="file" id="ijazah" accept=".pdf" @change="fileName = $event.target.files[0]?.name; formData.ijazah = $event.target.files[0]" required
+                                    <input type="file" name="ijazah" id="ijazah" accept=".pdf" @change="fileName = $event.target.files[0]?.name; formData.ijazah = $event.target.files[0]" required
                                            class="hidden">
                                     <label for="ijazah" class="cursor-pointer bg-gray-100 hover:bg-gray-200 px-4 py-3 rounded-lg border border-gray-300 flex items-center justify-between transition file-upload-label">
                                         <span x-text="fileName || 'Pilih file PDF'" class="text-gray-700 truncate"></span>
                                         <i class="fas fa-cloud-upload-alt text-gray-500 ml-3"></i>
                                     </label>
                                 </div>
-                                <div x-show="fileName" class="ml-4">
-                                    <button type="button" @click="fileName = ''; formData.ijazah = null; document.getElementById('ijazah').value = ''" 
-                                            class="text-red-500 hover:text-red-700">
-                                        <i class="fas fa-times-circle text-xl"></i>
-                                    </button>
-                                </div>
+                                <!-- Tombol hapus file -->
+                                <div x-show="fileName" class="mt-2 text-right">
+                                        <button type="button"
+                                                @click="fileName = ''; formData.ijazah = null; document.getElementById('ijazah').value = ''"
+                                                class="text-red-500 hover:text-red-700 text-sm">
+                                            <i class="fas fa-times-circle mr-1"></i>Hapus
+                                        </button>
+                                    </div>
                             </div>
                             <p class="text-xs text-gray-500 mt-2">Format: PDF (Maksimal 2MB)</p>
                         </div>
@@ -382,19 +397,21 @@
                             <label class="block text-sm font-bold text-gray-700 mb-3">Upload Pas Foto 3x4 <span class="text-red-500">*</span></label>
                             <div class="flex items-center">
                                 <div x-data="{ fileName: '' }" class="flex-grow">
-                                    <input type="file" id="foto" accept=".pdf,.jpg,.jpeg,.png" @change="fileName = $event.target.files[0]?.name; formData.foto = $event.target.files[0]" required
+                                    <input type="file" name="foto" id="foto" accept=".jpg,.jpeg,.png" @change="fileName = $event.target.files[0]?.name; formData.foto = $event.target.files[0]" required
                                            class="hidden">
                                     <label for="foto" class="cursor-pointer bg-gray-100 hover:bg-gray-200 px-4 py-3 rounded-lg border border-gray-300 flex items-center justify-between transition file-upload-label">
                                         <span x-text="fileName || 'Pilih file (PDF/JPG/PNG)'" class="text-gray-700 truncate"></span>
                                         <i class="fas fa-cloud-upload-alt text-gray-500 ml-3"></i>
                                     </label>
                                 </div>
-                                <div x-show="fileName" class="ml-4">
-                                    <button type="button" @click="fileName = ''; formData.foto = null; document.getElementById('foto').value = ''" 
-                                            class="text-red-500 hover:text-red-700">
-                                        <i class="fas fa-times-circle text-xl"></i>
-                                    </button>
-                                </div>
+                                 <!-- Tombol hapus file -->
+                                 <div x-show="fileName" class="mt-2 text-right">
+                                        <button type="button"
+                                                @click="fileName = ''; formData.foto = null; document.getElementById('foto').value = ''"
+                                                class="text-red-500 hover:text-red-700 text-sm">
+                                            <i class="fas fa-times-circle mr-1"></i>Hapus
+                                        </button>
+                                    </div>
                             </div>
                             <p class="text-xs text-gray-500 mt-2">Format: PDF/JPG/PNG (Maksimal 2MB)</p>
                         </div>
@@ -403,7 +420,7 @@
                         <div class="bg-gradient-to-r from-gray-50 to-gray-100 p-5 rounded-lg border border-gray-200">
                             <div class="flex items-start">
                                 <div class="flex items-center h-5 mt-1">
-                                    <input id="pernyataan" type="checkbox" x-model="formData.pernyataan" required
+                                    <input id="pernyataan" name="pernyataan" type="checkbox" x-model="formData.pernyataan" value="1" required
                                            class="h-5 w-5 text-primary focus:ring-primary border-2 border-gray-300 rounded">
                                 </div>
                                 <div class="ml-4">
@@ -427,7 +444,7 @@
                     </button>
                     <button type="submit" x-show="currentStep === 3" 
                             class="ml-auto px-6 py-3 bg-gradient-to-r from-success to-green-600 text-white rounded-xl hover:from-green-600 hover:to-success focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300 font-bold shadow-md hover:shadow-lg">
-                        <i class="fas fa-paper-plane mr-2"></i> Kirim Pendaftaran
+                        <i class="fas fa-paper-plane mr-2"></i> Kirim Pendaftaran <span class="text-red-500">*</span>
                     </button>
                 </div>
             </form>
@@ -463,7 +480,7 @@
 
 <script>
     document.addEventListener('alpine:init', () => {
-        Alpine.data('ppdbForm', () => ({
+        Alpine.data('app', () => ({
             currentStep: 1,
             formData: {
                 // Data Pribadi
@@ -501,7 +518,6 @@
             },
             
             nextStep() {
-                // Validasi sebelum pindah ke step berikutnya
                 if (this.validateStep()) {
                     this.currentStep++;
                     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -514,7 +530,6 @@
             },
             
             validateStep() {
-                // Validasi sederhana untuk setiap step
                 if (this.currentStep === 1) {
                     if (!this.formData.nama_lengkap || 
                         !this.formData.jenis_kelamin || 
@@ -544,7 +559,7 @@
                 return true;
             },
             
-            submitForm() {
+            async submitForm() {
                 // Validasi final sebelum submit
                 if (!this.formData.kk || 
                     !this.formData.akta || 
@@ -554,16 +569,46 @@
                     alert('Harap lengkapi semua dokumen dan centang pernyataan!');
                     return;
                 }
+
+                // Buat FormData untuk mengirim file
+                const formData = new FormData();
                 
-                // Di sini Anda bisa menambahkan kode untuk mengirim data ke server
-                // Contoh: menggunakan fetch API atau Axios
-                console.log('Form data:', this.formData);
+                // Tambahkan semua data form
+                Object.keys(this.formData).forEach(key => {
+                    if (key !== 'pernyataan') { // Skip pernyataan karena akan dihandle terpisah
+                        formData.append(key, this.formData[key]);
+                    }
+                });
                 
-                // Simulasi pengiriman data
-                alert('Pendaftaran berhasil dikirim! Kami akan menghubungi Anda melalui email atau WhatsApp.');
-                
-                // Reset form atau redirect ke halaman lain
-                // this.resetForm();
+                // Tambahkan pernyataan sebagai boolean
+                formData.append('pernyataan', this.formData.pernyataan ? '1' : '0');
+
+                try {
+                    // Kirim data ke server
+                    const response = await fetch('{{ route("ppdb.store") }}', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                            'Accept': 'application/json',
+                        },
+                        body: formData
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        alert('Pendaftaran berhasil dikirim!');
+                        this.resetForm();
+                        window.location.href = '{{ route("ppdb.create") }}';
+                    } else {
+                        // Tampilkan pesan error dari server
+                        const errorMessage = result.message || 'Terjadi kesalahan saat mengirim data';
+                        throw new Error(errorMessage);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan: ' + error.message);
+                }
             },
             
             resetForm() {
