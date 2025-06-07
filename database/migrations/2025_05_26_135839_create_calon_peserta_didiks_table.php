@@ -37,6 +37,8 @@ return new class extends Migration
             $table->string('foto')->nullable(); // path file
             $table->boolean('pernyataan')->default(false);
             $table->enum('status', ['pending', 'terima', 'tidak_terima'])->default('pending');
+            $table->integer('user_id');
+            $table->foreignId('academic_year_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

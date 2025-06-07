@@ -23,12 +23,12 @@ class ClassTeacherResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('class_room_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('teacher_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('class_room_id')
+                    ->relationship('class_room', 'name')
+                    ->required(),
+                Forms\Components\Select::make('teacher_id')
+                    ->relationship('teacher', 'name')
+                    ->required(),
             ]);
     }
 
@@ -36,11 +36,9 @@ class ClassTeacherResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('class_room_id')
-                    ->numeric()
+                Tables\Columns\SelectColumn::make('class_room.name')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('teacher_id')
-                    ->numeric()
+                Tables\Columns\SelectColumn::make('teacher.name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

@@ -10,7 +10,10 @@ class Assignment extends Model
         'title',
         'description',
         'file',
+        'due_date',
         'class_room_id',
+        'subject_id',
         'teacher_id',
     ];
+
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Attendance extends Model
 {
@@ -31,5 +32,17 @@ class Attendance extends Model
             self::STATUS_IZIN => 'Izin',
             self::STATUS_ALPA => 'Alpa',
         ];
+    }
+
+    // Tambahkan relasi ke Student
+    public function student(): BelongsTo
+    {
+        return $this->belongsTo(Student::class);
+    }
+
+    // Tambahkan relasi ke ClassRoom (perhatikan penulisan camelCase)
+    public function classRoom(): BelongsTo
+    {
+        return $this->belongsTo(ClassRoom::class, 'class_room_id'); // Khusus ini perlu specify column karena nama kolom tidak standar
     }
 }

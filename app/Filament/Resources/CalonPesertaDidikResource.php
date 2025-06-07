@@ -3,21 +3,38 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CalonPesertaDidikResource\Pages;
-use App\Filament\Resources\CalonPesertaDidikResource\RelationManagers;
 use App\Models\CalonPesertaDidik;
+use App\Models\User;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Hash;
 
-class CalonPesertaDidikResource extends Resource
+
+
+class CalonPesertaDidikResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = CalonPesertaDidik::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+            'accept_transfer',
+        ];
+    }
 
     public static function form(Form $form): Form
     {
@@ -94,8 +111,14 @@ class CalonPesertaDidikResource extends Resource
                 Forms\Components\TextInput::make('academic_year_id')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('status')
-                    ->required(),
+                Forms\Components\Select::make('status')
+                    ->options([
+                        'pending' => 'Pending',
+                        'terima' => 'Terima',
+                        'tidak_terima' => 'Tidak Terima',
+                    ])
+                    ->required()
+                    ->default('pending'),
             ]);
     }
 
@@ -105,61 +128,30 @@ class CalonPesertaDidikResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('nama_lengkap')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('jenis_kelamin'),
-                Tables\Columns\TextColumn::make('tempat_lahir')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('tanggal_lahir')
-                    ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('agama')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('pekerjaan')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('kebangsaan')
+                Tables\Columns\TextColumn::make('email')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('no_hp')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('asal_sekolah')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('nama_lembaga')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('nama_ayah')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('pekerjaan_ayah')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('nama_ibu')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('pekerjaan_ibu')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('no_hp_ortu')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('kk')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('akta')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('ijazah')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('foto')
-                    ->searchable(),
-                Tables\Columns\IconColumn::make('pernyataan')
-                    ->boolean(),
+                Tables\Columns\BadgeColumn::make('status')
+                    ->colors([
+                        'warning' => 'pending',
+                        'success' => 'terima',
+                        'danger' => 'tidak terima',
+                    ]),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('academic_year_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('status'),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('status')
+                    ->options([
+                        'pending' => 'pending',
+                        'accepted' => 'terima',
+                        'rejected' => 'tidak terima',
+                    ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -167,6 +159,34 @@ class CalonPesertaDidikResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make('acceptAndTransfer')
+                        ->label('Terima & Transfer ke User')
+                        ->icon('heroicon-s-user-plus')
+                        ->action(function (Collection $records) {
+                            $records->each(function (CalonPesertaDidik $record) {
+                                if ($record->status !== 'terima') {
+                                    // Create user account
+                                    $user = User::create([
+                                        'name' => $record->nama_lengkap,
+                                        'email' => $record->email,
+                                        'password' => bcrypt('password123'), // Default password
+                                        'phone' => $record->no_hp,
+                                    ]);
+                                    
+                                    // Assign student role using Shield
+                                    $user->assignRole('student');
+                                    
+                                    // Update status
+                                    $record->update(['status' => 'terima']);
+                                }
+                            });
+                        })
+                        ->requiresConfirmation()
+                        ->modalHeading('Terima Calon Peserta Didik')
+                        ->modalSubheading('Apakah Anda yakin ingin menerima dan mentransfer calon peserta didik terpilih?')
+                        ->modalButton('Ya, Terima & Transfer')
+                        ->deselectRecordsAfterCompletion()
+                        ->authorize('accept_transfer')
                 ]),
             ]);
     }

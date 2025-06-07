@@ -25,12 +25,12 @@ class AttendanceResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('student_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('class_room_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('student_id')
+                    ->relationship('student', 'name')
+                    ->required(),
+                Forms\Components\Select::make('class_room_id')
+                    ->relationship('class_room', 'name')
+                    ->required(),
                 DatePicker::make('date')
                     ->required(),
                 Select::make('status')
@@ -41,43 +41,51 @@ class AttendanceResource extends Resource
     }
 
     public static function table(Table $table): Table
-    {
-        return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('student_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('class_room_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('date')
-                    ->dateTime()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('status')
-                    ->searchable()
-                    ->enum(Attendance::getStatuses()),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
-                Tables\Filters\SelectFilter::make('status')
+{
+    return $table
+        ->columns([
+            Tables\Columns\TextColumn::make('student.name')
+                ->sortable()
+                ->searchable(),
+            Tables\Columns\TextColumn::make('class_room.name')
+                ->sortable()
+                ->searchable(),
+            Tables\Columns\TextColumn::make('date')
+                ->date()
+                ->sortable(),
+            Tables\Columns\TextColumn::make('status')
+                ->searchable()
+                ->badge()
+                ->color(fn (string $state): string => match ($state) {
+                    Attendance::STATUS_HADIR => 'success',
+                    Attendance::STATUS_SAKIT => 'warning',
+                    Attendance::STATUS_IZIN => 'info',
+                    Attendance::STATUS_ALPA => 'danger',
+                    default => 'gray',
+                })
+                ->formatStateUsing(fn (string $state): string => Attendance::getStatuses()[$state] ?? $state),
+            Tables\Columns\TextColumn::make('created_at')
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
+            Tables\Columns\TextColumn::make('updated_at')
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
+        ])
+        ->filters([
+            Tables\Filters\SelectFilter::make('status')
                 ->options(Attendance::getStatuses()),
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
-    }
+        ])
+        ->actions([
+            Tables\Actions\EditAction::make(),
+        ])
+        ->bulkActions([
+            Tables\Actions\BulkActionGroup::make([
+                Tables\Actions\DeleteBulkAction::make(),
+            ]),
+        ]);
+}
 
     public static function getRelations(): array
     {
