@@ -14,6 +14,10 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
+use Filament\Tables\Actions\BulkAction;
+use Filament\Tables\Actions\BulkActionGroup;
+
+
 
 
 
@@ -152,9 +156,37 @@ class CalonPesertaDidikResource extends Resource implements HasShieldPermissions
                         'accepted' => 'terima',
                         'rejected' => 'tidak terima',
                     ]),
-            ])
+
+    
+            ])->selectable()
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('acceptAndTransfer')
+                    ->label('Terima & Transfer ke User')
+                    ->icon('heroicon-s-user-plus')
+                    ->action(function (CalonPesertaDidik $record) {
+                        if ($record->status !== 'terima') {
+                            // Create user account
+                            $user = User::create([
+                                'name' => $record->nama_lengkap,
+                                'email' => $record->email,
+                                'password' => bcrypt('password123'), // Default password
+                                'phone' => $record->no_hp,
+                            ]);
+                            
+                            // Assign student role using Shield
+                            $user->assignRole('student');
+                            
+                            // Update status
+                            $record->update(['status' => 'terima']);
+                        }
+                    })
+                    ->requiresConfirmation()
+                    ->modalHeading('Terima Calon Peserta Didik')
+                    ->modalSubheading('Apakah Anda yakin ingin menerima dan mentransfer calon peserta didik terpilih?')
+                    ->modalButton('Ya, Terima & Transfer')
+                    ->deselectRecordsAfterCompletion()
+                    ->authorize('accept_transfer'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

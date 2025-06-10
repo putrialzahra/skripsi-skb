@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\ClassRoom;
+use App\Models\Subject;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Assignment extends Model
@@ -15,5 +18,21 @@ class Assignment extends Model
         'subject_id',
         'teacher_id',
     ];
+
+    public function classRoom()
+    {
+        return $this->belongsTo(ClassRoom::class);
+    }
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
+    }
+
+    public function teacher()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 
 }

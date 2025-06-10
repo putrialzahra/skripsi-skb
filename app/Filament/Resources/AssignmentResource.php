@@ -7,7 +7,7 @@ use App\Filament\Resources\AssignmentResource\RelationManagers;
 use App\Models\Assignment;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -30,20 +30,19 @@ class AssignmentResource extends Resource
                 Forms\Components\TextInput::make('description')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('file')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\FileUpload::make('file')
+                    ->required(),
                 Forms\Components\DatePicker::make('due_date')
                     ->required(),
-                Forms\Components\TextInput::make('class_room_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('subject_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('teacher_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('class_room_id')
+                    ->relationship('classRoom', 'name')
+                    ->required(),
+                Forms\Components\Select::make('subject_id')
+                    ->relationship('subject', 'name')
+                    ->required(),
+                Forms\Components\Select::make('teacher_id')
+                    ->relationship('teacher', 'name')
+                    ->required(),
             ]);
     }
 
