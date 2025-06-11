@@ -23,7 +23,7 @@ return new class extends Migration
             $table->text('alamat');
             $table->string('no_hp');
             $table->string('email')->unique();
-            $table->string('asal_sekolah'); // Paket A/B/C
+            $table->enum('paket', ['A', 'B', 'C']); // Paket A/B/C
             $table->string('nama_lembaga');
             $table->text('alamat_lembaga');
             $table->string('nama_ayah');

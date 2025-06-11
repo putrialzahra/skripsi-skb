@@ -226,7 +226,7 @@
                         <!-- Jenjang Asal -->
                         <div class="md:col-span-2">
                             <label class="block text-sm font-bold text-gray-700 mb-2">Pilih Paket Belajar <span class="text-red-500">*</span></label>
-                            <select name="asal_sekolah" x-model="formData.asal_sekolah" required
+                            <select name="paket" x-model="formData.paket" required
                                     class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl input-focus transition text-gray-700">
                                 <option value="" class="text-gray-400">Pilih Paket Belajar</option>
                                 <option value="Paket A">Paket A</option>
@@ -319,7 +319,7 @@
                     <div class="space-y-6">
                        <!-- Kartu Keluarga -->
                         <div class="bg-white p-6 rounded-xl border-2 border-gray-200">
-                            <label class="block text-sm font-bold text-gray-700 mb-3">Upload Kartu Keluarga (KK) <span class="text-red-500">*</span></label>
+                            <label class="block text-sm font-bold text-gray-700 mb-3">Upload Kartu Keluarga (KK)</label>
                             <div class="flex items-center">
                                 <!-- Input File dan Label -->
                                 <div x-data="{ fileName: '' }" class="flex-grow">
@@ -346,7 +346,7 @@
 
                         <!-- Akta Kelahiran -->
                         <div class="bg-white p-6 rounded-xl border-2 border-gray-200">
-                            <label class="block text-sm font-bold text-gray-700 mb-3">Upload Akta Kelahiran <span class="text-red-500">*</span></label>
+                            <label class="block text-sm font-bold text-gray-700 mb-3">Upload Akta Kelahiran</label>
                             <div class="flex items-center">
                                 <div x-data="{ fileName: '' }" class="flex-grow">
                                     <input type="file" name="akta" id="akta" accept=".pdf" @change="fileName = $event.target.files[0]?.name; formData.akta = $event.target.files[0]" required
@@ -370,10 +370,10 @@
                         
                         <!-- Ijazah/SKHUN -->
                         <div class="bg-white p-6 rounded-xl border-2 border-gray-200">
-                            <label class="block text-sm font-bold text-gray-700 mb-3">Upload Ijazah/SKHUN <span class="text-red-500">*</span></label>
+                            <label class="block text-sm font-bold text-gray-700 mb-3">Upload Ijazah/SKHUN</label>
                             <div class="flex items-center">
                                 <div x-data="{ fileName: '' }" class="flex-grow">
-                                    <input type="file" name="ijazah" id="ijazah" accept=".pdf" @change="fileName = $event.target.files[0]?.name; formData.ijazah = $event.target.files[0]" required
+                                    <input type="file" name="ijazah" id="ijazah" accept=".pdf" @change="fileName = $event.target.files[0]?.name; formData.ijazah = $event.target.files[0]"
                                            class="hidden">
                                     <label for="ijazah" class="cursor-pointer bg-gray-100 hover:bg-gray-200 px-4 py-3 rounded-lg border border-gray-300 flex items-center justify-between transition file-upload-label">
                                         <span x-text="fileName || 'Pilih file PDF'" class="text-gray-700 truncate"></span>
@@ -394,7 +394,7 @@
                         
                         <!-- Pas Foto -->
                         <div class="bg-white p-6 rounded-xl border-2 border-gray-200">
-                            <label class="block text-sm font-bold text-gray-700 mb-3">Upload Pas Foto 3x4 <span class="text-red-500">*</span></label>
+                            <label class="block text-sm font-bold text-gray-700 mb-3">Upload Pas Foto 3x4</label>
                             <div class="flex items-center">
                                 <div x-data="{ fileName: '' }" class="flex-grow">
                                     <input type="file" name="foto" id="foto" accept=".jpg,.jpeg,.png" @change="fileName = $event.target.files[0]?.name; formData.foto = $event.target.files[0]" required
@@ -424,7 +424,7 @@
                                            class="h-5 w-5 text-primary focus:ring-primary border-2 border-gray-300 rounded">
                                 </div>
                                 <div class="ml-4">
-                                    <label for="pernyataan" class="font-bold text-gray-700">Dengan ini saya menyatakan bahwa semua data dan dokumen yang saya upload adalah benar dan asli. <span class="text-red-500">*</span></label>
+                                    <label for="pernyataan" class="font-bold text-gray-700">Dengan ini saya menyatakan bahwa semua data dan dokumen yang saya upload adalah benar dan asli.</label>
                                     <p class="text-sm text-gray-600 mt-1">Data dan dokumen yang sudah dikirim tidak dapat diubah kembali. Pastikan semua data dan dokumen yang Anda upload sudah benar.</p>
                                 </div>
                             </div>
@@ -444,7 +444,7 @@
                     </button>
                     <button type="submit" x-show="currentStep === 3" 
                             class="ml-auto px-6 py-3 bg-gradient-to-r from-success to-green-600 text-white rounded-xl hover:from-green-600 hover:to-success focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300 font-bold shadow-md hover:shadow-lg">
-                        <i class="fas fa-paper-plane mr-2"></i> Kirim Pendaftaran <span class="text-red-500">*</span>
+                        <i class="fas fa-paper-plane mr-2"></i> Kirim Pendaftaran
                     </button>
                 </div>
             </form>

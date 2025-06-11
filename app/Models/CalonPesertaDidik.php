@@ -21,7 +21,7 @@ class CalonPesertaDidik extends Model
         'email',
         'pekerjaan',
         'kebangsaan',
-        'asal_sekolah',
+        'paket',
         'nama_lembaga',
         'alamat_lembaga',
         'nama_ayah',

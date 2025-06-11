@@ -81,7 +81,10 @@ class CalonPesertaDidikResource extends Resource implements HasShieldPermissions
                     ->email()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('asal_sekolah')
+                Forms\Components\TextInput::make('nama_lembaga')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('alamat_lembaga')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('nama_ayah')
@@ -140,7 +143,7 @@ class CalonPesertaDidikResource extends Resource implements HasShieldPermissions
                     ->searchable(),
                 Tables\Columns\TextColumn::make('no_hp')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('asal_sekolah')
+                Tables\Columns\TextColumn::make('paket')
                     ->searchable(),
                 Tables\Columns\BadgeColumn::make('status')
                     ->colors([
