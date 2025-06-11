@@ -13,4 +13,12 @@ class AssignmentSubmission extends Model
         'score',
     
     ];
+    public function assignment()
+    {
+        return $this->belongsTo(Assignment::class);
+    }
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
 }

@@ -34,6 +34,7 @@ class CalonPesertaDidik extends Model
         'ijazah',
         'foto',
         'pernyataan',
-        'status'
+        'status',
+        'user_id',
     ];
 }

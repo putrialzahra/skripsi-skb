@@ -23,15 +23,14 @@ class AssignmentSubmissionResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('assignment_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('student_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('file')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Select::make('assignment_id')
+                    ->relationship('assignment', 'title')
+                    ->required(),
+                Forms\Components\Select::make('student_id')
+                    ->relationship('student', 'name')
+                    ->required(),
+                Forms\Components\FileUpload::make('file')
+                    ->required(),
                 Forms\Components\TextInput::make('score')
                     ->numeric()
                     ->default(null),
@@ -42,10 +41,10 @@ class AssignmentSubmissionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('assignment_id')
+                Tables\Columns\TextColumn::make('assignment.title')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('student_id')
+                Tables\Columns\TextColumn::make('student.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('file')

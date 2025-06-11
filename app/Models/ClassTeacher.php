@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\ClassRoom;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class ClassTeacher extends Model
@@ -11,17 +12,16 @@ class ClassTeacher extends Model
         'teacher_id',
     ];
 
-      // Relasi ke ClassRoom
-      public function classRoom()
-      {
-          return $this->belongsTo(\App\Models\ClassRoom::class);
-      }
-  
-      // Relasi ke User sebagai Teacher
-      public function teacher()
-      {
-          return $this->belongsTo(\App\Models\User::class, 'teacher_id');
-      }
-  }
+    public function classRoom()
+    {
+        return $this->belongsTo(ClassRoom::class);
+    }
+
+    public function teacher()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+}
 
 

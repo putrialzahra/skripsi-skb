@@ -57,6 +57,13 @@ class CalonPesertaDidikResource extends Resource implements HasShieldPermissions
                 Forms\Components\TextInput::make('agama')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\Select::make('paket')
+                    ->options([
+                        'A' => 'A',
+                        'B' => 'B',
+                        'C' => 'C',
+                    ])
+                    ->required(),
                 Forms\Components\TextInput::make('pekerjaan')
                     ->required()
                     ->maxLength(255),
@@ -77,12 +84,6 @@ class CalonPesertaDidikResource extends Resource implements HasShieldPermissions
                 Forms\Components\TextInput::make('asal_sekolah')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('nama_lembaga')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('alamat_lembaga')
-                    ->required()
-                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('nama_ayah')
                     ->required()
                     ->maxLength(255),
@@ -115,6 +116,9 @@ class CalonPesertaDidikResource extends Resource implements HasShieldPermissions
                 Forms\Components\TextInput::make('academic_year_id')
                     ->required()
                     ->numeric(),
+                Forms\Components\TextInput::make('user_id')
+                    ->numeric()
+                    ->default(null),
                 Forms\Components\Select::make('status')
                     ->options([
                         'pending' => 'Pending',
@@ -185,9 +189,7 @@ class CalonPesertaDidikResource extends Resource implements HasShieldPermissions
                     ->modalHeading('Terima Calon Peserta Didik')
                     ->modalSubheading('Apakah Anda yakin ingin menerima dan mentransfer calon peserta didik terpilih?')
                     ->modalButton('Ya, Terima & Transfer')
-                    ->deselectRecordsAfterCompletion()
-                    ->authorize('accept_transfer'),
-            ])
+                    ->deselectRecordsAfterCompletion()            ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

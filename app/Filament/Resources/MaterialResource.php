@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -26,9 +27,9 @@ class MaterialResource extends Resource
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('file')
+                Forms\Components\FileUpload::make('file')
                     ->required()
-                    ->maxLength(255),
+                    ->maxSize(1024),
                 Forms\Components\TextInput::make('class_room_id')
                     ->required()
                     ->numeric(),
