@@ -226,12 +226,11 @@
                         <!-- Jenjang Asal -->
                         <div class="md:col-span-2">
                             <label class="block text-sm font-bold text-gray-700 mb-2">Pilih Paket Belajar <span class="text-red-500">*</span></label>
-                            <select name="paket" x-model="formData.paket" required
-                                    class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl input-focus transition text-gray-700">
+                            <select name="paket" x-model="formData.paket" required class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl input-focus transition text-gray-700">
                                 <option value="" class="text-gray-400">Pilih Paket Belajar</option>
-                                <option value="Paket A">Paket A</option>
-                                <option value="Paket B">Paket B</option>
-                                <option value="Paket C">Paket C</option>
+                                <option value="A">Paket A</option>
+                                <option value="B">Paket B</option>
+                                <option value="C">Paket C</option>
                             </select>
                         </div>
                         <!-- Nama Lembaga -->
@@ -540,7 +539,7 @@
                         !this.formData.alamat || 
                         !this.formData.no_hp || 
                         !this.formData.email || 
-                        !this.formData.asal_sekolah || 
+                        !this.formData.paket || 
                         !this.formData.nama_lembaga || 
                         !this.formData.alamat_lembaga) {
                         alert('Harap lengkapi semua data pribadi dan pendidikan!');
@@ -623,7 +622,7 @@
                     alamat: '',
                     no_hp: '',
                     email: '',
-                    asal_sekolah: '',
+                    paket: '',
                     nama_lembaga: '',
                     alamat_lembaga: '',
                     nama_ayah: '',

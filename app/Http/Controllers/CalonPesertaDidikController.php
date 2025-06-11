@@ -41,7 +41,7 @@ class CalonPesertaDidikController extends Controller
             'no_hp' => 'required|string|max:20',
             'email' => 'required|email|max:100|unique:calon_peserta_didiks,email',
             'kebangsaan' => 'required|string|max:3',
-            'asal_sekolah' => 'required|string|max:20',
+            'paket' => 'required|in:A,B,C',
             'nama_lembaga' => 'required|string',
             'alamat_lembaga' => 'required|string',
 
@@ -86,6 +86,7 @@ class CalonPesertaDidikController extends Controller
                 'akta' => $filePaths['akta'] ?? null,
                 'ijazah' => $filePaths['ijazah'] ?? null,
                 'foto' => $filePaths['foto'] ?? null,
+                'paket' => $validated['paket'],
                 'status' => 'pending'
             ]);
 

@@ -57,13 +57,6 @@ class CalonPesertaDidikResource extends Resource implements HasShieldPermissions
                 Forms\Components\TextInput::make('agama')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('paket')
-                    ->options([
-                        'A' => 'A',
-                        'B' => 'B',
-                        'C' => 'C',
-                    ])
-                    ->required(),
                 Forms\Components\TextInput::make('pekerjaan')
                     ->required()
                     ->maxLength(255),
@@ -79,6 +72,9 @@ class CalonPesertaDidikResource extends Resource implements HasShieldPermissions
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('paket')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('nama_lembaga')
