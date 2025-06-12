@@ -34,13 +34,13 @@ class AssignmentResource extends Resource
                     ->required(),
                 Forms\Components\DatePicker::make('due_date')
                     ->required(),
-                Forms\Components\Select::make('class_room_id')
+                Forms\Components\Select::make('classRoom.name')
                     ->relationship('classRoom', 'name')
                     ->required(),
-                Forms\Components\Select::make('subject_id')
+                Forms\Components\Select::make('subject.name')
                     ->relationship('subject', 'name')
                     ->required(),
-                Forms\Components\Select::make('teacher_id')
+                Forms\Components\Select::make('teacher.name')
                     ->relationship('teacher', 'name')
                     ->required(),
             ]);
@@ -58,13 +58,13 @@ class AssignmentResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('due_date')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('class_room_id')
+                Tables\Columns\TextColumn::make('classRoom.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('subject_id')
+                Tables\Columns\TextColumn::make('subject.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('teacher_id')
+                Tables\Columns\TextColumn::make('teacher.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
