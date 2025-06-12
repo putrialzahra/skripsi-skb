@@ -26,10 +26,10 @@ class ClassRoomResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('academic_year_id')
+                Forms\Components\Select::make('academicYear.name')
                     ->relationship('academicYear', 'name')
                     ->required(),
-                Forms\Components\Select::make('package_id')
+                Forms\Components\Select::make('package.name')
                     ->relationship('package', 'name')
                     ->required(),
             ]);
@@ -41,7 +41,7 @@ class ClassRoomResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('academic_year.name')
+                Tables\Columns\TextColumn::make('academicYear.name')
                     ->label('Tahun Ajaran')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('package.name')
@@ -49,10 +49,10 @@ class ClassRoomResource extends Resource
                     ->searchable(),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('academic_year_id')
-                    ->relationship('academicYear', 'name'),
-                Tables\Filters\SelectFilter::make('package_id')
+                Tables\Filters\SelectFilter::make('package .name')
                     ->relationship('package', 'name'),
+                Tables\Filters\SelectFilter::make('academicYear.name')
+                    ->relationship('academicYear', 'name'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

@@ -219,7 +219,7 @@ class CalonPesertaDidikResource extends Resource implements HasShieldPermissions
                         ->modalSubheading('Apakah Anda yakin ingin menerima dan mentransfer calon peserta didik terpilih?')
                         ->modalButton('Ya, Terima & Transfer')
                         ->deselectRecordsAfterCompletion()
-                        ->authorize('accept_transfer')
+                        
                 ]),
             ]);
     }

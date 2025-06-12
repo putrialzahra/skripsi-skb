@@ -36,7 +36,7 @@ class ClassStudentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('class_room.name')
+                Tables\Columns\TextColumn::make('classRoom.name')
                     ->label('Kelas')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('student.name')

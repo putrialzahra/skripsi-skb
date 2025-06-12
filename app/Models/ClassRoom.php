@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\AcademicYear;
+use App\Models\Package;
+use App\Models\Attendance;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;

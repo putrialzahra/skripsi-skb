@@ -30,12 +30,12 @@ class MaterialResource extends Resource
                 Forms\Components\FileUpload::make('file')
                     ->required()
                     ->maxSize(1024),
-                Forms\Components\TextInput::make('class_room_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('subject_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('class_room_id')
+                    ->relationship('classRoom', 'name')
+                    ->required(),
+                Forms\Components\Select::make('subject_id')
+                    ->relationship('subject', 'name')
+                    ->required(),
             ]);
     }
 
@@ -44,27 +44,32 @@ class MaterialResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
-                    ->searchable(),
+                ->searchable(),
                 Tables\Columns\TextColumn::make('file')
-                    ->searchable(),
+                ->searchable(),
                 Tables\Columns\TextColumn::make('class_room_id')
-                    ->numeric()
-                    ->sortable(),
+                ->label('Class Room')
+                ->getStateUsing(fn ($record) => $record->classRoom?->name)
+                ->sortable(),
                 Tables\Columns\TextColumn::make('subject_id')
-                    ->numeric()
-                    ->sortable(),
+                ->label('Subject')
+                ->getStateUsing(fn ($record) => $record->subject?->name)
+                ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
-            ])
+                Tables\Filters\SelectFilter::make('class_room_id')
+                    ->relationship('classRoom', 'name'),
+                Tables\Filters\SelectFilter::make('subject_id')
+                    ->relationship('subject', 'name'),
+                ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

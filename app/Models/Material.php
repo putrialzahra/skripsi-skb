@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\ClassRoom;
+use App\Models\Subject;use App\Models\ClassTeacher;
 
 class Material extends Model
 {
@@ -12,6 +14,16 @@ class Material extends Model
         'file',
         'class_room_id',
         'subject_id',
-        'teacher_id',
     ];
+    public function classRoom()
+    {
+        return $this->belongsTo(ClassRoom::class);
+    }
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
+    }
+   
+    
+    
 }

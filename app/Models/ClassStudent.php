@@ -29,4 +29,5 @@ class ClassStudent extends Model
     {
         return $this->belongsTo(User::class, 'student_id');
     }
+    
 }
