@@ -13,6 +13,8 @@ use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
+
 
 class MaterialResource extends Resource
 {
@@ -95,4 +97,10 @@ class MaterialResource extends Resource
             'edit' => Pages\EditMaterial::route('/{record}/edit'),
         ];
     }
+
+    public static function canAccess(): bool
+    {
+        return Auth::check() && Auth::user()->hasRole('teacher');
+    }
+
 }
