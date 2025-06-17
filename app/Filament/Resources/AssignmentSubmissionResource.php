@@ -25,9 +25,11 @@ class AssignmentSubmissionResource extends Resource
             ->schema([
                 Forms\Components\Select::make('assignment_id')
                     ->relationship('assignment', 'title')
+                    ->label('Tugas')
                     ->required(),
                 Forms\Components\Select::make('student_id')
                     ->relationship('student', 'name')
+                    ->label('Siswa')
                     ->required(),
                 Forms\Components\FileUpload::make('file')
                     ->required(),
@@ -42,9 +44,11 @@ class AssignmentSubmissionResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('assignment.title')
+                    ->label('Tugas')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('student.name')
+                    ->label('Siswa')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('file')

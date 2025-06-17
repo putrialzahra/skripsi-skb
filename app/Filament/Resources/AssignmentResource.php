@@ -35,13 +35,16 @@ class AssignmentResource extends Resource
                     ->required(),
                 Forms\Components\DatePicker::make('due_date')
                     ->required(),
-                Forms\Components\Select::make('classRoom.name')
-                    ->relationship('classRoom', 'name')
+                Forms\Components\Select::make('class_room_id')
+                    ->label('Kelas')
+                    ->relationship('classRoom', 'id')
                     ->required(),
-                Forms\Components\Select::make('subject.name')
-                    ->relationship('subject', 'name')
+                Forms\Components\Select::make('subject_id')
+                    ->label('Mata Pelajaran')
+                    ->relationship('subject', 'id')
                     ->required(),
-                Forms\Components\Select::make('teacher.name')
+                Forms\Components\Select::make('teacher_id')
+                    ->label('Guru')
                     ->relationship('teacher', 'name')
                     ->required(),
             ]);
@@ -59,13 +62,13 @@ class AssignmentResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('due_date')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('classRoom.name')
+                Tables\Columns\TextColumn::make('class_room_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('subject.name')
+                Tables\Columns\TextColumn::make('subject_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('teacher.name')
+                Tables\Columns\TextColumn::make('teacher_id')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
