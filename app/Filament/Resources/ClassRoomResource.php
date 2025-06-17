@@ -26,10 +26,12 @@ class ClassRoomResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('academicYear.name')
+                Forms\Components\Select::make('academic_year_id')
+                    ->label('Tahun Ajaran')
                     ->relationship('academicYear', 'name')
                     ->required(),
-                Forms\Components\Select::make('package.name')
+                Forms\Components\Select::make('package_id')
+                    ->label('Package')
                     ->relationship('package', 'name')
                     ->required(),
             ]);
