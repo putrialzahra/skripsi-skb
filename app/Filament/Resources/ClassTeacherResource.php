@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Models\User;
 
 class ClassTeacherResource extends Resource
 {
@@ -23,11 +24,20 @@ class ClassTeacherResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('classRoom.name')
+                Forms\Components\Select::make('class_room_id')
+                    ->label('Class')
                     ->relationship('classRoom', 'name')
                     ->required(),
-                Forms\Components\Select::make('teacher.name')
-                    ->relationship('teacher', 'name')
+                Forms\Components\Select::make('teacher_id')
+                    ->label('Guru')
+                    ->options(
+                        User::whereHas('roles', function ($query) {
+                                $query->where('name', 'teacher');
+                            })
+                            ->pluck('name', 'id')
+                            ->toArray()
+                    )
+                    ->searchable()
                     ->required(),
             ]);
     }
