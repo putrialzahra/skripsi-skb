@@ -13,6 +13,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class AcademicYearResource extends Resource
 {
@@ -73,6 +74,11 @@ class AcademicYearResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function canAccess(): bool
+    {
+        return Auth::user()->hasRole('super_admin');
     }
 
     public static function getPages(): array
