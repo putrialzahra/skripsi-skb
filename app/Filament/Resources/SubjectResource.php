@@ -39,8 +39,8 @@ class SubjectResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('package.name')
-                    ->label('Package')
+                Tables\Columns\TextColumn::make('package_id')
+                    ->label('Paket')
                     ->searchable()
                     ->sortable(),
             ])

@@ -4,9 +4,11 @@ namespace App\Models;
 use App\Models\AcademicYear;
 use App\Models\Package;
 use App\Models\Attendance;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class ClassRoom extends Model
 {
@@ -38,5 +40,10 @@ class ClassRoom extends Model
     public function attendances(): HasMany
     {
         return $this->hasMany(Attendance::class, 'class_room_id');
+    }
+
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'class_students', 'class_room_id', 'student_id');
     }
 }

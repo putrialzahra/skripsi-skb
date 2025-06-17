@@ -37,11 +37,11 @@ class AssignmentResource extends Resource
                     ->required(),
                 Forms\Components\Select::make('class_room_id')
                     ->label('Kelas')
-                    ->relationship('classRoom', 'id')
+                    ->relationship('classRoom', 'name')
                     ->required(),
                 Forms\Components\Select::make('subject_id')
                     ->label('Mata Pelajaran')
-                    ->relationship('subject', 'id')
+                    ->relationship('subject', 'name')
                     ->required(),
                 Forms\Components\Select::make('teacher_id')
                     ->label('Guru')
@@ -63,12 +63,15 @@ class AssignmentResource extends Resource
                 Tables\Columns\TextColumn::make('due_date')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('class_room_id')
+                    ->label('Kelas')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('subject_id')
+                    ->label('Mata Pelajaran')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('teacher_id')
+                    ->label('Guru')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

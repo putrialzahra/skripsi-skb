@@ -43,17 +43,17 @@ class ClassRoomResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('academicYear.name')
+                Tables\Columns\TextColumn::make('academic_year_id')
                     ->label('Tahun Ajaran')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('package.name')
+                Tables\Columns\TextColumn::make('package_id')
                     ->label('Package')
                     ->searchable(),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('package .name')
+                Tables\Filters\SelectFilter::make('package_id')
                     ->relationship('package', 'name'),
-                Tables\Filters\SelectFilter::make('academicYear.name')
+                Tables\Filters\SelectFilter::make('academic_year_id')
                     ->relationship('academicYear', 'name'),
             ])
             ->actions([

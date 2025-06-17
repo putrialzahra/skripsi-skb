@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Models\User;
 
 class ClassTeacherResource extends Resource
 {
@@ -23,10 +24,12 @@ class ClassTeacherResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('classRoom.name')
+                Forms\Components\Select::make('class_room_id')
+                    ->label('Kelas')
                     ->relationship('classRoom', 'name')
                     ->required(),
-                Forms\Components\Select::make('teacher.name')
+                Forms\Components\Select::make('teacher_id')
+                    ->label('Guru')
                     ->relationship('teacher', 'name')
                     ->required(),
             ]);
@@ -36,9 +39,9 @@ class ClassTeacherResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('classRoom.name')
+                Tables\Columns\TextColumn::make('class_room_id')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('teacher.name')
+                Tables\Columns\TextColumn::make('teacher_id')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -50,7 +53,10 @@ class ClassTeacherResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('class_room_id')
+                    ->relationship('classRoom', 'name'),
+                Tables\Filters\SelectFilter::make('teacher_id')
+                    ->relationship('teacher', 'name'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -65,7 +71,7 @@ class ClassTeacherResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            
         ];
     }
 

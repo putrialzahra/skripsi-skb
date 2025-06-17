@@ -24,7 +24,7 @@ class PackageResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->label('Package')
+                    ->label('Paket')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -35,7 +35,7 @@ class PackageResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Package')
+                    ->label('Paket')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
