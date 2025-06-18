@@ -30,7 +30,14 @@ class ClassTeacherResource extends Resource
                     ->required(),
                 Forms\Components\Select::make('teacher_id')
                     ->label('Guru')
-                    ->relationship('teacher', 'name')
+                    ->options(
+                        User::whereHas('roles', function ($query) {
+                                $query->where('name', 'teacher');
+                            })
+                            ->pluck('name', 'id')
+                            ->toArray()
+                    )
+                    ->searchable()
                     ->required(),
             ]);
     }
