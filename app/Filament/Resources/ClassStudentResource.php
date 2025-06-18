@@ -45,10 +45,10 @@ class ClassStudentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('classRoom.name')
+                Tables\Columns\TextColumn::make('class_room_id')
                     ->label('Kelas')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('student.name')
+                Tables\Columns\TextColumn::make('student_id')
                     ->label('Siswa')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')

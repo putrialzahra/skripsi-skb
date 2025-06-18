@@ -13,6 +13,8 @@ use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
+
 
 class MaterialResource extends Resource
 {
@@ -32,9 +34,11 @@ class MaterialResource extends Resource
                     ->maxSize(1024),
                 Forms\Components\Select::make('class_room_id')
                     ->relationship('classRoom', 'name')
+                    ->label('Kelas')
                     ->required(),
                 Forms\Components\Select::make('subject_id')
                     ->relationship('subject', 'name')
+                    ->label('Mata Pelajaran')
                     ->required(),
             ]);
     }
@@ -48,11 +52,11 @@ class MaterialResource extends Resource
                 Tables\Columns\TextColumn::make('file')
                 ->searchable(),
                 Tables\Columns\TextColumn::make('class_room_id')
-                ->label('Class Room')
+                ->label('Kelas')
                 ->getStateUsing(fn ($record) => $record->classRoom?->name)
                 ->sortable(),
                 Tables\Columns\TextColumn::make('subject_id')
-                ->label('Subject')
+                ->label('Mata Pelajaran')
                 ->getStateUsing(fn ($record) => $record->subject?->name)
                 ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -95,4 +99,5 @@ class MaterialResource extends Resource
             'edit' => Pages\EditMaterial::route('/{record}/edit'),
         ];
     }
+
 }

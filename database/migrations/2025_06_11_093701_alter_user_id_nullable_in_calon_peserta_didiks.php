@@ -11,9 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('calon_peserta_didiks', function (Blueprint $table) {
-            $table->integer('user_id')->nullable()->change();
-        });
+       //
     }
 
     /**
@@ -21,8 +19,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('calon_peserta_didiks', function (Blueprint $table) {
-            $table->integer('user_id')->change();
-        });
+    // 
     }
 };
