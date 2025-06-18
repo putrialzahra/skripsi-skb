@@ -37,15 +37,12 @@ class AssignmentResource extends Resource
                     ->required(),
                 Forms\Components\Select::make('class_room_id')
                     ->label('Kelas')
-                    ->relationship('classRoom', 'name')
                     ->required(),
                 Forms\Components\Select::make('subject_id')
                     ->label('Mata Pelajaran')
-                    ->relationship('subject', 'name')
                     ->required(),
                 Forms\Components\Select::make('teacher_id')
                     ->label('Guru')
-                    ->relationship('teacher', 'name')
                     ->required(),
             ]);
     }
@@ -111,5 +108,7 @@ class AssignmentResource extends Resource
             'edit' => Pages\EditAssignment::route('/{record}/edit'),
         ];
     }
+
+    
 
 }

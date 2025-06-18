@@ -27,7 +27,7 @@ class SubjectResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Select::make('package_id')
-                    ->relationship('package', 'name')
+                    ->label('Paket')
                     ->required(),
             ]);
     }
@@ -45,7 +45,9 @@ class SubjectResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('package_id')
+                    ->label('Paket')
+                    ->searchable(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

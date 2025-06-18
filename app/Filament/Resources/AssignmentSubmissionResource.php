@@ -24,11 +24,9 @@ class AssignmentSubmissionResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('assignment_id')
-                    ->relationship('assignment', 'title')
                     ->label('Tugas')
                     ->required(),
                 Forms\Components\Select::make('student_id')
-                    ->relationship('student', 'name')
                     ->label('Siswa')
                     ->required(),
                 Forms\Components\FileUpload::make('file')

@@ -26,10 +26,10 @@ class AttendanceResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('student_id')
-                    ->relationship('student', 'name')
+                    ->label('Siswa')
                     ->required(),
                 Forms\Components\Select::make('class_room_id')
-                    ->relationship('class_room', 'name')
+                    ->label('Kelas')
                     ->required(),
                 DatePicker::make('date')
                     ->required(),

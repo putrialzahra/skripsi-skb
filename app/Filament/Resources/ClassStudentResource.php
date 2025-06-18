@@ -25,7 +25,7 @@ class ClassStudentResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('class_room_id')
-                    ->relationship('classRoom', 'name')
+                    ->label('Kelas')
                     ->required(),
                 Forms\Components\Select::make('student_id')
                     ->label('Siswa')
@@ -62,9 +62,11 @@ class ClassStudentResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('class_room_id')
-                    ->relationship('classRoom', 'name'),
+                    ->label('Kelas')
+                    ->searchable(),
                 Tables\Filters\SelectFilter::make('student_id')
-                    ->relationship('student', 'name'),
+                    ->label('Siswa')
+                    ->searchable(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

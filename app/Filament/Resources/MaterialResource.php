@@ -33,11 +33,9 @@ class MaterialResource extends Resource
                     ->required()
                     ->maxSize(1024),
                 Forms\Components\Select::make('class_room_id')
-                    ->relationship('classRoom', 'name')
                     ->label('Kelas')
                     ->required(),
                 Forms\Components\Select::make('subject_id')
-                    ->relationship('subject', 'name')
                     ->label('Mata Pelajaran')
                     ->required(),
             ]);

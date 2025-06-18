@@ -26,7 +26,6 @@ class ClassTeacherResource extends Resource
             ->schema([
                 Forms\Components\Select::make('class_room_id')
                     ->label('Kelas')
-                    ->relationship('classRoom', 'name')
                     ->required(),
                 Forms\Components\Select::make('teacher_id')
                     ->label('Guru')
@@ -61,9 +60,11 @@ class ClassTeacherResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('class_room_id')
-                    ->relationship('classRoom', 'name'),
+                    ->label('Kelas')
+                    ->searchable(),
                 Tables\Filters\SelectFilter::make('teacher_id')
-                    ->relationship('teacher', 'name'),
+                    ->label('Guru')
+                    ->searchable(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

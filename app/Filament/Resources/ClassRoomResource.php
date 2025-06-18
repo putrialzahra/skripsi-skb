@@ -28,11 +28,9 @@ class ClassRoomResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Select::make('academic_year_id')
                     ->label('Tahun Ajaran')
-                    ->relationship('academicYear', 'name')
                     ->required(),
                 Forms\Components\Select::make('package_id')
                     ->label('Package')
-                    ->relationship('package', 'name')
                     ->required(),
             ]);
     }
@@ -52,9 +50,11 @@ class ClassRoomResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('package_id')
-                    ->relationship('package', 'name'),
+                    ->label('Package')
+                    ->searchable(),
                 Tables\Filters\SelectFilter::make('academic_year_id')
-                    ->relationship('academicYear', 'name'),
+                    ->label('Tahun Ajaran')
+                    ->searchable(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
