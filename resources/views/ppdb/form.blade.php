@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ asset('images/logo.jpeg') }}" type="image/png">
     <title>PPDB 2025/2026 - SKB DINAS PENDIDIKAN KOTA PALEMBANG</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -59,7 +60,7 @@
                 <div class="flex items-center mb-4 md:mb-0">
                     <div class="bg-white rounded-xl p-3 mr-4">
                     <div class="w-16 h-16 bg-white flex items-center justify-center rounded-lg">
-                            <img src="https://dinaspendidikankotapalembang.com/image/logo.png" alt="Logo" class="w-full h-full object-contain">
+                            <img src="{{ asset('images/logo.jpeg') }}" alt="Logo" class="w-full h-full object-contain">
                         </div>
                     </div>
                     <div>
@@ -323,7 +324,7 @@
                                 <!-- Input File dan Label -->
                                 <div x-data="{ fileName: '' }" class="flex-grow">
                                     <input type="file" name="kk" id="kk" accept=".pdf"
-                            @change="fileName = $event.target.files[0]?.name; formData.kk = $event.target.files[0]" required
+                            @change="fileName = $event.target.files[0]?.name; formData.kk = $event.target.files[0]" 
                             class="hidden">
                                     <label for="kk" class="cursor-pointer bg-gray-100 hover:bg-gray-200 px-4 py-3 rounded-lg border border-gray-300 flex items-center justify-between transition file-upload-label">
                                         <span x-text="fileName || 'Pilih file PDF'" class="text-gray-700 truncate"></span>
@@ -348,7 +349,7 @@
                             <label class="block text-sm font-bold text-gray-700 mb-3">Upload Akta Kelahiran</label>
                             <div class="flex items-center">
                                 <div x-data="{ fileName: '' }" class="flex-grow">
-                                    <input type="file" name="akta" id="akta" accept=".pdf" @change="fileName = $event.target.files[0]?.name; formData.akta = $event.target.files[0]" required
+                                    <input type="file" name="akta" id="akta" accept=".pdf" @change="fileName = $event.target.files[0]?.name; formData.akta = $event.target.files[0]" 
                                            class="hidden">
                                     <label for="akta" class="cursor-pointer bg-gray-100 hover:bg-gray-200 px-4 py-3 rounded-lg border border-gray-300 flex items-center justify-between transition file-upload-label">
                                         <span x-text="fileName || 'Pilih file PDF'" class="text-gray-700 truncate"></span>
@@ -396,7 +397,7 @@
                             <label class="block text-sm font-bold text-gray-700 mb-3">Upload Pas Foto 3x4</label>
                             <div class="flex items-center">
                                 <div x-data="{ fileName: '' }" class="flex-grow">
-                                    <input type="file" name="foto" id="foto" accept=".jpg,.jpeg,.png" @change="fileName = $event.target.files[0]?.name; formData.foto = $event.target.files[0]" required
+                                    <input type="file" name="foto" id="foto" accept=".jpg,.jpeg,.png" @change="fileName = $event.target.files[0]?.name; formData.foto = $event.target.files[0]" 
                                            class="hidden">
                                     <label for="foto" class="cursor-pointer bg-gray-100 hover:bg-gray-200 px-4 py-3 rounded-lg border border-gray-300 flex items-center justify-between transition file-upload-label">
                                         <span x-text="fileName || 'Pilih file (PDF/JPG/PNG)'" class="text-gray-700 truncate"></span>
@@ -641,5 +642,29 @@
         }));
     });
 </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script>
+            @if (session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: '{{ session('success') }}',
+                    showConfirmButton: false,
+                    timer: 2500
+                });
+            @endif
+
+            @if (session('error'))
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal!',
+                    text: '{{ session('error') }}',
+                    showConfirmButton: true
+                });
+            @endif
+        </script>
+
 </body>
 </html>

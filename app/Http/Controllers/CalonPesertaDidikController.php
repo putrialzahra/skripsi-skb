@@ -53,10 +53,10 @@ class CalonPesertaDidikController extends Controller
             'no_hp_ortu' => 'required|string|max:20',
 
             // File Upload
-            'kk' => 'required|file|mimes:pdf|max:2048',
-            'akta' => 'required|file|mimes:pdf|max:2048',
-            'ijazah' => 'required|file|mimes:pdf|max:2048',
-            'foto' => 'required|image|mimes:jpg,jpeg,png|max:1024',
+            'kk' => 'nullable|file|mimes:pdf|max:2048',
+            'akta' => 'nullable|file|mimes:pdf|max:2048',
+            'ijazah' => 'nullable|file|mimes:pdf|max:2048',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:1024',
 
             // Checkbox
             'pernyataan' => 'accepted'
