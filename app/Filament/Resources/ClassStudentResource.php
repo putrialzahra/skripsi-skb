@@ -26,6 +26,9 @@ class ClassStudentResource extends Resource
             ->schema([
                 Forms\Components\Select::make('class_room_id')
                     ->label('Kelas')
+                    ->options(
+                        fn () => \App\Models\ClassRoom::all()->pluck('name', 'id')
+                    )
                     ->required(),
                 Forms\Components\Select::make('student_id')
                     ->label('Siswa')
@@ -46,11 +49,13 @@ class ClassStudentResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('class_room_id')
+                    ->getStateUsing(fn ($record) => $record->classRoom?->name)
                     ->label('Kelas')
-                    ->searchable(),
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('student_id')
+                    ->getStateUsing(fn ($record) => $record->student?->name)
                     ->label('Siswa')
-                    ->searchable(),
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -93,4 +98,6 @@ class ClassStudentResource extends Resource
             'edit' => Pages\EditClassStudent::route('/{record}/edit'),
         ];
     }
+
+
 }

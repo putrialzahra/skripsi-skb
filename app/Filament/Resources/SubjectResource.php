@@ -28,7 +28,10 @@ class SubjectResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Select::make('package_id')
                     ->label('Paket')
-                    ->required(),
+                    ->required()
+                    ->options(
+                        fn () => \App\Models\Package::all()->pluck('name', 'id')
+                    ),
             ]);
     }
 
@@ -39,13 +42,13 @@ class SubjectResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('package_id')
+                Tables\Columns\TextColumn::make('package.name')
                     ->label('Paket')
                     ->searchable()
                     ->sortable(),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('package_id')
+                Tables\Filters\SelectFilter::make('package.name')
                     ->label('Paket')
                     ->searchable(),
             ])

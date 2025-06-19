@@ -5,6 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\AssignmentSubmissionResource\Pages;
 use App\Filament\Resources\AssignmentSubmissionResource\RelationManagers;
 use App\Models\AssignmentSubmission;
+use App\Models\Assignment;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -24,9 +26,15 @@ class AssignmentSubmissionResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('assignment_id')
+                    ->options(
+                        fn () => Assignment::all()->pluck('title', 'id')
+                    )
                     ->label('Tugas')
                     ->required(),
                 Forms\Components\Select::make('student_id')
+                    ->options(
+                        fn () => User::all()->pluck('name', 'id')
+                    )
                     ->label('Siswa')
                     ->required(),
                 Forms\Components\FileUpload::make('file')
@@ -41,11 +49,11 @@ class AssignmentSubmissionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('assignment.title')
+                Tables\Columns\TextColumn::make('assignment_id')
                     ->label('Tugas')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('student.name')
+                Tables\Columns\TextColumn::make('student_id')
                     ->label('Siswa')
                     ->numeric()
                     ->sortable(),

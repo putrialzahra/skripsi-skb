@@ -5,6 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\AttendanceResource\Pages;
 use App\Filament\Resources\AttendanceResource\RelationManagers;
 use App\Models\Attendance;
+use App\Models\ClassRoom;
+use App\Models\ClassStudent;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Components\DatePicker;
@@ -25,10 +27,16 @@ class AttendanceResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('student_id')
+                Forms\Components\Select::make('class_student_id')
+                    ->options(
+                        fn () => ClassStudent::all()->pluck('name', 'id')
+                    )
                     ->label('Siswa')
                     ->required(),
                 Forms\Components\Select::make('class_room_id')
+                    ->options(
+                        fn () => ClassRoom::all()->pluck('name', 'id')
+                    )
                     ->label('Kelas')
                     ->required(),
                 DatePicker::make('date')
@@ -44,10 +52,12 @@ class AttendanceResource extends Resource
 {
     return $table
         ->columns([
-            Tables\Columns\TextColumn::make('student.name')
+            Tables\Columns\TextColumn::make('class_student_id')
+                ->label('Siswa')
                 ->sortable()
                 ->searchable(),
-            Tables\Columns\TextColumn::make('class_room.name')
+            Tables\Columns\TextColumn::make('class_room_id')
+                ->label('Kelas')
                 ->sortable()
                 ->searchable(),
             Tables\Columns\TextColumn::make('date')

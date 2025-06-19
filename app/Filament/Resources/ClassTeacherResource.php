@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Models\User;
+use App\Models\ClassRoom;
 
 class ClassTeacherResource extends Resource
 {
@@ -26,6 +27,9 @@ class ClassTeacherResource extends Resource
             ->schema([
                 Forms\Components\Select::make('class_room_id')
                     ->label('Kelas')
+                    ->options(
+                        fn () => ClassRoom::all()->pluck('name', 'id')
+                    )
                     ->required(),
                 Forms\Components\Select::make('teacher_id')
                     ->label('Guru')
@@ -46,8 +50,12 @@ class ClassTeacherResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('class_room_id')
+                    ->getStateUsing(fn ($record) => $record->classRoom?->name)
+                    ->label('Kelas')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('teacher_id')
+                    ->getStateUsing(fn ($record) => $record->teacher?->name)
+                    ->label('Guru')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

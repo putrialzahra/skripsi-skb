@@ -240,4 +240,9 @@ class CalonPesertaDidikResource extends Resource implements HasShieldPermissions
             'edit' => Pages\EditCalonPesertaDidik::route('/{record}/edit'),
         ];
     }
+
+    public static function canAccess(): bool
+{
+    return Auth::user()->hasRole('super_admin');
+}
 }

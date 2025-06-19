@@ -28,9 +28,15 @@ class ClassRoomResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Select::make('academic_year_id')
                     ->label('Tahun Ajaran')
+                    ->options(
+                        fn () => \App\Models\AcademicYear::all()->pluck('name', 'id')
+                    )
                     ->required(),
                 Forms\Components\Select::make('package_id')
                     ->label('Package')
+                    ->options(
+                        fn () => \App\Models\Package::all()->pluck('name', 'id')
+                    )
                     ->required(),
             ]);
     }
@@ -43,9 +49,11 @@ class ClassRoomResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('academic_year_id')
                     ->label('Tahun Ajaran')
+                    ->getStateUsing(fn ($record) => $record->academicYear?->name)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('package_id')
                     ->label('Package')
+                    ->getStateUsing(fn ($record) => $record->package?->name)
                     ->searchable(),
             ])
             ->filters([

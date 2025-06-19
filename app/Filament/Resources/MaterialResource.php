@@ -10,6 +10,8 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use App\Models\ClassRoom;
+use App\Models\Subject;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -34,9 +36,15 @@ class MaterialResource extends Resource
                     ->maxSize(1024),
                 Forms\Components\Select::make('class_room_id')
                     ->label('Kelas')
+                    ->options(
+                        fn () =>ClassRoom::all()->pluck('name', 'id')
+                    )
                     ->required(),
                 Forms\Components\Select::make('subject_id')
                     ->label('Mata Pelajaran')
+                    ->options(
+                        fn () =>Subject::all()->pluck('name', 'id')
+                    )
                     ->required(),
             ]);
     }
@@ -68,9 +76,9 @@ class MaterialResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('class_room_id')
-                    ->relationship('classRoom', 'name'),
+                    ->label('Kelas'),
                 Tables\Filters\SelectFilter::make('subject_id')
-                    ->relationship('subject', 'name'),
+                    ->label('Mata Pelajaran'),
                 ])
             ->actions([
                 Tables\Actions\EditAction::make(),

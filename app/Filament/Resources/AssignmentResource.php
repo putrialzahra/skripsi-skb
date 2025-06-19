@@ -5,6 +5,9 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\AssignmentResource\Pages;
 use App\Filament\Resources\AssignmentResource\RelationManagers;
 use App\Models\Assignment;
+use App\Models\ClassRoom;
+use App\Models\ClassTeacher;
+use App\Models\Subject;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Components\Select;
@@ -36,12 +39,21 @@ class AssignmentResource extends Resource
                 Forms\Components\DatePicker::make('due_date')
                     ->required(),
                 Forms\Components\Select::make('class_room_id')
+                    ->options(function () {
+                        return ClassRoom::all()->pluck('name', 'id');
+                    })
                     ->label('Kelas')
                     ->required(),
                 Forms\Components\Select::make('subject_id')
+                    ->options(function () {
+                        return Subject::all()->pluck('name', 'id');
+                    })
                     ->label('Mata Pelajaran')
                     ->required(),
                 Forms\Components\Select::make('teacher_id')
+                    ->options(function () {
+                        return ClassTeacher::all()->pluck('teacher_id', 'id');
+                    })
                     ->label('Guru')
                     ->required(),
             ]);

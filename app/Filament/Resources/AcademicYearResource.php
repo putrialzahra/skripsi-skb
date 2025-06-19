@@ -89,4 +89,6 @@ class AcademicYearResource extends Resource
             'edit' => Pages\EditAcademicYear::route('/{record}/edit'),
         ];
     }
+
+    
 }
