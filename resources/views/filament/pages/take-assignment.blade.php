@@ -1,9 +1,7 @@
-<div>
-    <x-filament::card>
-        {{ $this->form }}
-    </x-filament::card>
+<x-filament-panels::page>
+    {{ $this->form }}
 
     <x-filament::button wire:click="submit" class="mt-4">
-        Simpan
+        Save Assignment
     </x-filament::button>
-</div>
+</x-filament-panels::page>

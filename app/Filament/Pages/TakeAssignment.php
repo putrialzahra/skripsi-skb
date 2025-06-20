@@ -7,10 +7,10 @@ use App\Models\ClassRoom;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Pages\Page;
-use App\Models\User;
-use App\Services\AssignmentService;
+use Illuminate\Support\Facades\Auth;
 
 class TakeAssignment extends Page
 {
@@ -31,6 +31,7 @@ class TakeAssignment extends Page
                 ->get()
                 ->map(function ($assignment) {
                     return [
+                        'id' => $assignment->id,
                         'title' => $assignment->title,
                         'description' => $assignment->description,
                         'due_date' => $assignment->due_date,
@@ -44,11 +45,11 @@ class TakeAssignment extends Page
     protected function getFormSchema(): array
     {
         return [
-                Select::make('class_room_id')
-                ->label('Pilih Kelas')
+            Select::make('class_room_id')
+                ->label('Kelas')
                 ->options(function () {
                     return ClassRoom::whereHas('students', function ($query) {
-                        $query->where('student_id', auth()->user()->id); // ✅ Benar
+                        $query->where('student_id', Auth::user()->id); // ✅ Benar
                     })->pluck('name', 'id');
                 })
                 ->required()
@@ -57,6 +58,7 @@ class TakeAssignment extends Page
 
             Repeater::make('assignments')
                 ->schema([
+                    Hidden::make('id'),
                     TextInput::make('title')->disabled(),
                     TextInput::make('description')->disabled(),
                     TextInput::make('due_date')->disabled()->label('Tanggal Deadline'),
@@ -66,4 +68,29 @@ class TakeAssignment extends Page
                 ->default(fn () => $this->assignments),
         ];
     }
+
+    public function submit(): void
+    {
+        $data = $this->form->getState();
+
+        foreach ($data['assignments'] as $entry) {
+            \App\Models\AssignmentSubmission::updateOrCreate(
+                [
+                    'student_id' => Auth::user()->id,
+                    'class_room_id' => $this->class_room_id,
+                    'assignment_id' => $entry['assignment_id'],
+                ],
+                [
+                    'submitted' => true,
+                ]
+            );
+        }
+
+        \Filament\Notifications\Notification::make()
+            ->title('Assignment submitted successfully')
+            ->success()
+            ->send();
+    }
 }
+
+
