@@ -1,52 +1,63 @@
 <?php
 namespace App\Services;
 
-use App\Models\User;
-use App\Models\ClassRoom;
+
 use App\Models\Assignment;
 use App\Models\AssignmentSubmission;
-use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class AssignmentService
 {
     /**
-     * Get students for a class with their assignment submission status (if already submitted).
+     * Ambil semua assignment untuk kelas tertentu.
      */
-    public function getStudentListWithSubmissionStatus(int $classRoomId, int $assignmentId): array
+    public function getAssignmentsForClass(int $classRoomId): array
     {
-        $classRoom = ClassRoom::with('students')->findOrFail($classRoomId);
-        $assignment = Assignment::findOrFail($assignmentId);
-
-        $submissions = AssignmentSubmission::where('assignment_id', $assignmentId)
+        return Assignment::where('class_room_id', $classRoomId)
+            ->with('teacher')
             ->get()
-            ->keyBy('student_id');
-
-        return $classRoom->students->map(function (User $student) use ($submissions, $assignment) {
-            $submission = $submissions[$student->id] ?? null;
-            
-            return [
-                'student_id' => $student->id,
-                'student_name' => $student->name,
-                'submission_file' => $submission->file_path ?? null,
-                'status' => $this->determineStatus($submission, $assignment),
-                'score' => $submission->score ?? null,
-            ];
-        })->toArray();
+            ->map(function ($assignment) {
+                return [
+                    'id' => $assignment->id,
+                    'title' => $assignment->title,
+                    'description' => $assignment->description,
+                    'due_date' => $assignment->due_date,
+                    'file' => $assignment->file,
+                    'teacher_name' => optional($assignment->teacher)->name ?? 'N/A',
+                ];
+            })
+            ->toArray();
     }
 
     /**
-     * Determine submission status based on due date and submission time
+     * Ambil assignment beserta status submit dari siswa.
      */
-    protected function determineStatus(?AssignmentSubmission $submission, Assignment $assignment): string
+    public function getAssignmentsWithStatus(int $classRoomId, ?int $studentId = null): array
     {
-        if (!$submission) {
-            return 'missing';
+        if (!$studentId) {
+            $studentId = Auth::id();
         }
 
-        if ($submission->submitted_at->gt($assignment->due_date)) {
-            return 'late';
-        }
+        $assignments = Assignment::where('class_room_id', $classRoomId)
+            ->with(['submissions' => function ($query) use ($studentId) {
+                $query->where('student_id', $studentId);
+            }])
+            ->get();
 
-        return 'submitted';
+        return $assignments->map(function ($assignment) use ($studentId) {
+            $submission = $assignment->submissions->first();
+
+            return [
+                'id' => $assignment->id,
+                'title' => $assignment->title,
+                'description' => $assignment->description,
+                'due_date' => $assignment->due_date,
+                'file' => $assignment->file,
+                'teacher_name' => optional($assignment->teacher)->name ?? 'N/A',
+                'submitted' => (bool) $submission,
+                'submission_id' => optional($submission)->id,
+                'submitted_at' => optional($submission)->created_at,
+            ];
+        })->toArray();
     }
 }
