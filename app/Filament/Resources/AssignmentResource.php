@@ -72,16 +72,16 @@ class AssignmentResource extends Resource
                 Tables\Columns\TextColumn::make('due_date')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('class_room_id')
+                    ->getStateUsing(fn ($record) => $record->classRoom?->name)
                     ->label('Kelas')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('subject_id')
+                    ->getStateUsing(fn ($record) => $record->subject?->name)
                     ->label('Mata Pelajaran')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('teacher_id')
+                    ->getStateUsing(fn ($record) => $record->teacher?->name)
                     ->label('Guru')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -121,6 +121,8 @@ class AssignmentResource extends Resource
         ];
     }
 
-    
-
+    public static function canAccess(): bool
+    {
+        return Auth::user()->hasRole('teacher');
+    }
 }

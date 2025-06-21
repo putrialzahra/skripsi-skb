@@ -7,11 +7,14 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css " rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="/">SKB Dinas Pendidikan Kota Palembang</a>
-        </div>
-    </nav>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center" href="/">
+                    <img src="{{ asset('images/logo.jpeg') }}" alt="Logo" width="40" height="40" class="me-2">
+                    {{ config('app.name') }}
+                </a>
+            </div>
+        </nav>
 
     <div class="container mt-4">
         @yield('content')

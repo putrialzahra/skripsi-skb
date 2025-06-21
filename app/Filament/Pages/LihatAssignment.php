@@ -124,4 +124,9 @@ class LihatAssignment extends Page
             ->success()
             ->send();
     }
+
+    public static function canAccess(): bool
+    {
+        return Auth::user()->hasRole('teacher');
+    }
 }

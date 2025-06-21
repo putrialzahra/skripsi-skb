@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Models\User;
 use App\Models\ClassRoom;
+use Illuminate\Support\Facades\Auth;
 
 class ClassTeacherResource extends Resource
 {
@@ -98,5 +99,10 @@ class ClassTeacherResource extends Resource
             'create' => Pages\CreateClassTeacher::route('/create'),
             'edit' => Pages\EditClassTeacher::route('/{record}/edit'),
         ];
+    }
+
+    public static function canAccess(): bool
+    {
+        return Auth::user()->hasRole('super_admin');
     }
 }

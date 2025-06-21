@@ -12,6 +12,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -98,5 +99,10 @@ class AssignmentSubmissionResource extends Resource
             'create' => Pages\CreateAssignmentSubmission::route('/create'),
             'edit' => Pages\EditAssignmentSubmission::route('/{record}/edit'),
         ];
+    }
+
+    public static function canAccess(): bool
+    {
+        return Auth::user()->hasRole('student');
     }
 }

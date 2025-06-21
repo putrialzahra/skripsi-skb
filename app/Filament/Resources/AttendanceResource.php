@@ -14,8 +14,7 @@ use Filament\Forms\Components\Select;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class AttendanceResource extends Resource
 {
@@ -28,17 +27,17 @@ class AttendanceResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('class_student_id')
-                    ->options(
-                        fn () => ClassStudent::all()->pluck('name', 'id')
-                    )
-                    ->label('Siswa')
-                    ->required(),
+                ->label('Siswa')
+                ->options(
+                    fn () => ClassStudent::all()->pluck('name', 'id')
+                )
+                ->required(),
                 Forms\Components\Select::make('class_room_id')
-                    ->options(
-                        fn () => ClassRoom::all()->pluck('name', 'id')
-                    )
-                    ->label('Kelas')
-                    ->required(),
+                ->label('Kelas')
+                ->options(
+                    fn () => ClassRoom::all()->pluck('name', 'id')
+                )
+                ->required(),
                 DatePicker::make('date')
                     ->required(),
                 Select::make('status')
@@ -53,10 +52,12 @@ class AttendanceResource extends Resource
     return $table
         ->columns([
             Tables\Columns\TextColumn::make('class_student_id')
+            ->getStateUsing(fn ($record) => $record->classStudent?->name)
                 ->label('Siswa')
                 ->sortable()
                 ->searchable(),
             Tables\Columns\TextColumn::make('class_room_id')
+            ->getStateUsing(fn ($record) => $record->classRoom?->name)
                 ->label('Kelas')
                 ->sortable()
                 ->searchable(),
@@ -111,5 +112,10 @@ class AttendanceResource extends Resource
             'create' => Pages\CreateAttendance::route('/create'),
             'edit' => Pages\EditAttendance::route('/{record}/edit'),
         ];
+    }
+
+    public static function canAccess(): bool
+    {
+        return Auth::user()->hasRole('student');
     }
 }

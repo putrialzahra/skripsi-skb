@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ClassStudentResource extends Resource
 {
@@ -97,6 +98,11 @@ class ClassStudentResource extends Resource
             'create' => Pages\CreateClassStudent::route('/create'),
             'edit' => Pages\EditClassStudent::route('/{record}/edit'),
         ];
+    }
+
+    public static function canAccess(): bool
+    {
+        return Auth::user()->hasRole('super_admin');
     }
 
 

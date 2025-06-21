@@ -9,6 +9,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Concerns\InteractsWithForms;
+use Illuminate\Support\Facades\Auth;
 
 class TakeAttendance extends Page
 {
@@ -95,6 +96,11 @@ class TakeAttendance extends Page
             ->title('Attendance recorded successfully')
             ->success()
             ->send();
+    }
+
+    public static function canAccess(): bool
+    {
+        return Auth::user()->hasRole('teacher');
     }
 
 

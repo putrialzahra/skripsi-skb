@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 
 class Attendance extends Model
 {
@@ -41,8 +43,14 @@ class Attendance extends Model
     }
 
     // Tambahkan relasi ke ClassRoom (perhatikan penulisan camelCase)
-    public function classRoom(): BelongsTo
+    public function classStudent()
     {
-        return $this->belongsTo(ClassRoom::class, 'class_room_id'); // Khusus ini perlu specify column karena nama kolom tidak standar
+        return $this->belongsTo(\App\Models\ClassStudent::class);
     }
+
+    public function classRoom()
+    {
+        return $this->belongsTo(\App\Models\ClassRoom::class);
+    }
+
 }

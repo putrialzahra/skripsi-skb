@@ -91,4 +91,9 @@ class ClassRoomResource extends Resource
         ];
     }
 
+    public static function canAccess(): bool
+    {
+        return Auth::user()->hasRole('super_admin');
+    }
+
 }
