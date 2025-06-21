@@ -9,7 +9,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
-            <a class="navbar-brand" href="/">SKB Palembang</a>
+            <a class="navbar-brand" href="/">SKB Dinas Pendidikan Kota Palembang</a>
         </div>
     </nav>
 

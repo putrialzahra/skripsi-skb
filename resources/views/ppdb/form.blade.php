@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('images/logo.jpeg') }}" type="image/png">
-    <title>PPDB 2025/2026 - SKB DINAS PENDIDIKAN KOTA PALEMBANG</title>
+    <title>SKB DINAS PENDIDIKAN KOTA PALEMBANG</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -65,7 +65,7 @@
                     </div>
                     <div>
                         <h1 class="text-2xl md:text-3xl font-bold tracking-tight">SKB DINAS PENDIDIKAN KOTA PALEMBANG</h1>
-                        <p class="text-blue-100 text-sm md:text-base mt-1">Penerimaan Peserta Didik Baru Tahun 2025/2026</p>
+                        <p class="text-blue-100 text-sm md:text-base mt-1">Penerimaan Peserta Didik Baru</p>
                     </div>
                     </div>
                 <div class="bg-white text-primary px-6 py-3 rounded-xl shadow-lg">
@@ -457,7 +457,7 @@
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-4 md:mb-0">
                     <h3 class="text-lg font-bold">SKB Dinas Pendidikan Kota Palembang</h3>
-                    <p class="text-blue-100 text-sm">Jl. Pendidikan No. 123, Palembang - Sumatera Selatan</p>
+                    <p class="text-blue-100 text-sm">Jl. Srijaya KM. 5,5 No. 896 Palembang - Sumatera Selatan</p>
                 </div>
                 <div class="flex space-x-4">
                     <a href="#" class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition">
@@ -472,7 +472,7 @@
                 </div>
             </div>
             <div class="border-t border-blue-400 mt-4 pt-4 text-center text-sm text-blue-100">
-                © 2025 SKB Dinas Pendidikan Kota Palembang. All rights reserved.
+                © 2025 Putri Alzahra. All rights reserved.
             </div>
         </div>
     </footer>
@@ -643,28 +643,30 @@
     });
 </script>
 
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-        <script>
-            @if (session('success'))
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Berhasil!',
-                    text: '{{ session('success') }}',
-                    showConfirmButton: false,
-                    timer: 2500
-                });
-            @endif
+<script>
+   @if (session('success'))
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: '{{ session('success') }}',
+        showConfirmButton: false,
+        timer: 2500
+    });
+@endif
 
-            @if (session('error'))
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Gagal!',
-                    text: '{{ session('error') }}',
-                    showConfirmButton: true
-                });
-            @endif
-        </script>
+@if (session('error'))
+    Swal.fire({
+        icon: 'error',
+        title: 'Gagal!',
+        text: '{{ session('error') }}',
+        showConfirmButton: true
+    });
+@endif
+</script>
+
+        
 
 </body>
 </html>

@@ -18,7 +18,7 @@ class AssignmentSubmission extends Model
         return $this->belongsTo(Assignment::class);
     }
     public function student()
-    {
-        return $this->belongsTo(Student::class);
-    }
+{
+    return $this->belongsTo(User::class, 'student_id'); // ← benar jika siswa ada di tabel users
+}
 }

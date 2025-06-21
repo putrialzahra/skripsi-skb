@@ -11,6 +11,7 @@ use Filament\Forms\Components\Hidden;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
+use App\Models\ClassTeacher;
 
 class TakeAssignment extends Page
 {
@@ -63,6 +64,7 @@ class TakeAssignment extends Page
                     TextInput::make('description')->disabled(),
                     TextInput::make('due_date')->disabled()->label('Tanggal Deadline'),
                     TextInput::make('teacher_name')->disabled()->label('Guru'),
+                    TextInput::make('file'),
                 ])
                 ->visible(fn (callable $get) => count($get('assignments')) > 0)
                 ->default(fn () => $this->assignments),
@@ -78,7 +80,8 @@ class TakeAssignment extends Page
                 [
                     'student_id' => Auth::user()->id,
                     'class_room_id' => $this->class_room_id,
-                    'assignment_id' => $entry['assignment_id'],
+                    'assignment_id' => $entry['id'],
+                    'file' => $entry['file'],
                 ],
                 [
                     'submitted' => true,

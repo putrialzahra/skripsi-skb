@@ -5,6 +5,9 @@ use App\Models\AcademicYear;
 use App\Models\Package;
 use App\Models\Attendance;
 use App\Models\User;
+use App\Models\Assignment;
+use App\Models\ClassTeacher;
+use App\Models\AssignmentSubmission;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,7 +18,7 @@ class ClassRoom extends Model
     protected $fillable = [
         'name',
         'academic_year_id',
-        'package_id'
+        'package_id',
     ];
 
     /**
@@ -46,4 +49,21 @@ class ClassRoom extends Model
     {
         return $this->belongsToMany(User::class, 'class_students', 'class_room_id', 'student_id');
     }
+
+    public function classTeachers()
+    {
+        return $this->hasMany(ClassTeacher::class);
+    }
+
+    public function assignments()
+    {
+        return $this->hasMany(Assignment::class, 'class_room_id', 'id');
+    }
+
+    public function assignmentSubmissions()
+    {
+        return $this->hasMany(AssignmentSubmission::class);
+    }
+
+
 }

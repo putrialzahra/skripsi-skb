@@ -26,7 +26,7 @@ class CalonPesertaDidikController extends Controller
         if (!$activeyear) {
             return back()->withInput()
                          ->with('error', 'Tidak ada tahun akademik aktif.');
-        }
+        }        
 
         // Validasi input
         $validated = $request->validate([
@@ -86,7 +86,6 @@ class CalonPesertaDidikController extends Controller
                 'akta' => $filePaths['akta'] ?? null,
                 'ijazah' => $filePaths['ijazah'] ?? null,
                 'foto' => $filePaths['foto'] ?? null,
-                'paket' => $validated['paket'],
                 'status' => 'pending'
             ]);
 

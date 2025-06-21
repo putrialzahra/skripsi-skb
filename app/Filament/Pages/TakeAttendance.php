@@ -32,6 +32,7 @@ class TakeAttendance extends Page
     // Kita buat dulu form nya
     protected function getFormSchema(): array
     {
+        // dd(auth()->user()->id);
         return [
             Select::make('class_room_id')
                 ->label('Class')
