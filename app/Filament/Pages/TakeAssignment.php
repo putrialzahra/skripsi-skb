@@ -36,7 +36,7 @@ class TakeAssignment extends Page
                         'title' => $assignment->title,
                         'description' => $assignment->description,
                         'due_date' => $assignment->due_date,
-                        'teacher_name' => optional($assignment->teacher)->name ?? 'N/A',
+                        'teacher_id' => optional($assignment->teacher)->id ?? 'N/A',
                     ];
                 })
                 ->toArray();
@@ -63,7 +63,7 @@ class TakeAssignment extends Page
                     TextInput::make('title')->disabled(),
                     TextInput::make('description')->disabled(),
                     TextInput::make('due_date')->disabled()->label('Tanggal Deadline'),
-                    TextInput::make('teacher_name')->disabled()->label('Guru'),
+                    TextInput::make('teacher_id')->disabled()->label('Guru'),
                     TextInput::make('file'),
                 ])
                 ->visible(fn (callable $get) => count($get('assignments')) > 0)
@@ -81,6 +81,7 @@ class TakeAssignment extends Page
                     'student_id' => Auth::user()->id,
                     'class_room_id' => $this->class_room_id,
                     'assignment_id' => $entry['id'],
+                    'teacher_id' => $entry['teacher_id'],
                     'file' => $entry['file'],
                 ],
                 [

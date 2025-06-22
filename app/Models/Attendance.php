@@ -45,7 +45,7 @@ class Attendance extends Model
     // Tambahkan relasi ke ClassRoom (perhatikan penulisan camelCase)
     public function classStudent()
     {
-        return $this->belongsTo(\App\Models\ClassStudent::class);
+        return $this->belongsTo(ClassStudent::class, 'student_id');
     }
 
     public function classRoom()

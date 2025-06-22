@@ -15,6 +15,8 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AttendanceResource extends Resource
 {
@@ -29,15 +31,16 @@ class AttendanceResource extends Resource
                 Forms\Components\Select::make('class_student_id')
                 ->label('Siswa')
                 ->options(
-                    fn () => ClassStudent::all()->pluck('name', 'id')
+                    fn () => \App\Models\ClassStudent::all()->pluck('name', 'id')
                 )
                 ->required(),
+            
                 Forms\Components\Select::make('class_room_id')
-                ->label('Kelas')
-                ->options(
-                    fn () => ClassRoom::all()->pluck('name', 'id')
-                )
-                ->required(),
+                    ->options(function () {
+                        return ClassRoom::all()->pluck('name', 'id');
+                    })
+                    ->label('Kelas')
+                    ->required(),
                 DatePicker::make('date')
                     ->required(),
                 Select::make('status')
@@ -51,13 +54,11 @@ class AttendanceResource extends Resource
 {
     return $table
         ->columns([
-            Tables\Columns\TextColumn::make('class_student_id')
-            ->getStateUsing(fn ($record) => $record->classStudent?->name)
+            Tables\Columns\TextColumn::make('classStudent.name')
                 ->label('Siswa')
                 ->sortable()
                 ->searchable(),
-            Tables\Columns\TextColumn::make('class_room_id')
-            ->getStateUsing(fn ($record) => $record->classRoom?->name)
+            Tables\Columns\TextColumn::make('classRoom.name')
                 ->label('Kelas')
                 ->sortable()
                 ->searchable(),
