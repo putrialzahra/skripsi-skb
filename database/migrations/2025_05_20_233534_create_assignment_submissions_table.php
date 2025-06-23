@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('assignment_id')->constrained()->cascadeOnDelete();
             $table->foreignId('student_id')->constrained('users')->cascadeOnDelete();
-            $table->string('file');
+            $table->string('file')->nullable();
             $table->float('score')->nullable();
             $table->timestamps();
         });

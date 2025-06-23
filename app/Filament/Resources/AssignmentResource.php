@@ -50,12 +50,8 @@ class AssignmentResource extends Resource
                     })
                     ->label('Mata Pelajaran')
                     ->required(),
-                Forms\Components\Select::make('teacher_id')
-                    ->options(function () {
-                        return ClassTeacher::all()->pluck('teacher_id', 'id');
-                    })
-                    ->label('Guru')
-                    ->required(),
+                Forms\Components\Hidden::make('teacher_id')
+                    ->default(Auth::user()->id),
             ]);
     }
 

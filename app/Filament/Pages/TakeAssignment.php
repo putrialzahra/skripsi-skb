@@ -11,7 +11,6 @@ use Filament\Forms\Components\Hidden;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
-use App\Models\ClassTeacher;
 
 class TakeAssignment extends Page
 {
@@ -25,23 +24,25 @@ class TakeAssignment extends Page
 
     public function updatedClassRoomId(): void
     {
+
         if ($this->class_room_id) {
             // Ambil semua assignment untuk kelas ini
             $this->assignments = Assignment::where('class_room_id', $this->class_room_id)
-                ->with('teacher') // Jika ingin tampilkan nama guru
                 ->get()
                 ->map(function ($assignment) {
                     return [
+
                         'id' => $assignment->id,
                         'title' => $assignment->title,
                         'description' => $assignment->description,
                         'due_date' => $assignment->due_date,
-                        'teacher_id' => optional($assignment->teacher)->id ?? 'N/A',
                     ];
                 })
                 ->toArray();
         }
     }
+
+
 
     protected function getFormSchema(): array
     {
@@ -63,7 +64,6 @@ class TakeAssignment extends Page
                     TextInput::make('title')->disabled(),
                     TextInput::make('description')->disabled(),
                     TextInput::make('due_date')->disabled()->label('Tanggal Deadline'),
-                    TextInput::make('teacher_id')->disabled()->label('Guru'),
                     TextInput::make('file'),
                 ])
                 ->visible(fn (callable $get) => count($get('assignments')) > 0)
@@ -81,7 +81,6 @@ class TakeAssignment extends Page
                     'student_id' => Auth::user()->id,
                     'class_room_id' => $this->class_room_id,
                     'assignment_id' => $entry['id'],
-                    'teacher_id' => $entry['teacher_id'],
                     'file' => $entry['file'],
                 ],
                 [

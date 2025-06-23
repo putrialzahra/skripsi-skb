@@ -7,6 +7,7 @@ use App\Filament\Resources\AttendanceResource\RelationManagers;
 use App\Models\Attendance;
 use App\Models\ClassRoom;
 use App\Models\ClassStudent;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Components\DatePicker;
@@ -54,7 +55,7 @@ class AttendanceResource extends Resource
 {
     return $table
         ->columns([
-            Tables\Columns\TextColumn::make('classStudent.name')
+            Tables\Columns\TextColumn::make('student.name')
                 ->label('Siswa')
                 ->sortable()
                 ->searchable(),
